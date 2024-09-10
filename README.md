@@ -166,7 +166,7 @@ Here is the post-braker pipeline, specially designed and refined for the Leuven 
 
 The first step would be to check that we have tiara information for our SAGs. This step was already done [here](https://github.com/gmafer/SAGs-pipeline/wiki/SAGs-Alacant-Pipeline#post-assembly-statistics-quast-busco--tiara) but I repeat it here with a script that only runs tiara, just in case the results from QBT were removed. Again, this step is not necessary if you already have tiara results. This step is important because we will need Tiara information in the future of this pipeline.
 
-[0-tiara.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#0-tiarash)
+[0-tiara.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/0-tiara.sh)
 
 ### EggNOG-mapper
 
