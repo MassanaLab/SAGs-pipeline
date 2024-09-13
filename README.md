@@ -269,19 +269,19 @@ Then we can do a QBT analysis (explained before).
 
 Notice the `N=x` variable. Indicate there to which filter (1, 2, or 3) you want to do QBT.
 
-[10-QBT_test_filterx.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#10-qbt_test_filterxsh)
+[10-QBT_test_filterx.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/10-QBT_test_filterx.sh)
 
 Here is an extra script just to keep the files from QBT that we will be using and remove the rest.
 
-[11-QB_cleanning.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#11-qb_cleanningsh)
+[11-QB_cleanning.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/11-QB_cleanning.sh)
 
 And do the reports:
 
-[12-QBT_report.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#12-qbt_reportsh)
+[12-QBT_report.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/12-QBT_report.sh)
 
 Move the 3 `all_repotsx` files to a folder in your computer and execute this script in R:
 
-[13-QBT_LEUVEN_summary_final_filters.R](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#13-qbt_leuven_summary_final_filtersr)
+[13-QBT_LEUVEN_summary_final_filters.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/13-QBT_LEUVEN_summary_final_filters.R)
 
 ***
 # GENE LINK & FINAL-FOLDER 
@@ -292,19 +292,19 @@ Finally, the last (optional) step is to create what we call a "final folder" tha
 
 The first step links each scaffold with its set of genes:
 
-[14-use_filter_scaffold_gene_FUNCTION_ARG.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#14-use_filter_scaffold_gene_function_argsh)
+[14-use_filter_scaffold_gene_FUNCTION_ARG.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/14-use_filter_scaffold_gene_FUNCTION_ARG.sh)
 
-[filter_scaffold_gene_FUNCTION_ARG.R](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#filter_scaffold_gene_function_argr)
+[filter_scaffold_gene_FUNCTION_ARG.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/filter_scaffold_gene_FUNCTION_ARG.R)
 
 ### Add SAG name to fasta headers
 
 Then, we must ensure that each gene inside the final `.aa` and `.codingseq` files has the name of the SAG before the name of the gene, so for posterior analyses we will always have very clear what gene from which SAG we are looking at.
 
-[15-generate_aa+codingseq_hdr.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#15-generate_aacodingseq_hdrsh)
+[15-generate_aa+codingseq_hdr.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/15-generate_aa%2Bcodingseq_hdr.sh)
 
 ### Build the final folders
 
 In the last step, we just create the folders and copy there all the files that we consider to be the most important ones.
  
-[16-build_leuven_filter3_folders.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#16-build_leuven_filter3_folderssh)
+[16-build_leuven_filter3_folders.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16-build_leuven_filter3_folders.sh)
 
