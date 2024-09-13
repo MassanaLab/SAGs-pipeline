@@ -166,13 +166,13 @@ Here is the post-braker pipeline, specially designed and refined for the Leuven 
 
 The first step would be to check that we have tiara information for our SAGs. This step was already done but I repeat it here with a script that only runs Tiara, just in case the results from QBT were removed. Again, this step won't be necessary if you already have tiara results. This step is important because we will need Tiara's information in the future of this pipeline.
 
-[0-tiara.sh]([https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/0-tiara.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/0-tiara.sh))
+[0-tiara.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/0-tiara.sh)
 
 ### EggNOG-mapper
 
 Here we use EggNOG-mapper for functional annotation of genes. It uses its own database, which contains orthologous groups and functional annotations, to assign functions to sequences based on homology. 
 
-[1-eggnog_mapper.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#1-eggnog_mappersh)
+[1-eggnog_mapper.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/1-eggnog_mapper.sh)
 
 In this script, I create a singular file for each sample. It is inside this file where EggNOG-mapper will create 3 files:
 
@@ -186,7 +186,7 @@ All 3 files are interesting but in our case, we only focus on the `.anotations` 
 
 In particular, the first 5 lines are very annoying, so we can remove them with this script:
 
-[2-clean_eggnog_annotation.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#2-clean_eggnog_annotationsh)
+[2-clean_eggnog_annotation.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/2-clean_eggnog_annotation.sh)
 
 ### GTF file cleaning
 
@@ -194,9 +194,9 @@ Then, using this script from @aleixop we will clean up the `.gtf` files from **B
 
 The cleaning of the `.gtf` files is essentially choosing one transcript per gene. Notice how in `.gtf` files we can have more than one transcript for each gene (they are named as _.t1_, _.t2_, _.t3_...) and it becomes really annoying, so with this script we are just keepping longest transcript to make this easier.
 
-[3-use_ALEIX_get_prediction_stats.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#3-use_aleix_get_prediction_statssh)
+[3-use_ALEIX_get_prediction_stats.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/3-use_ALEIX_get_prediction_stats.sh)
 
-[ALEIX_get_prediction_stats.R](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#aleix_get_prediction_statsr)
+[ALEIX_get_prediction_stats.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/ALEIX_get_prediction_stats.R)
 
 ### Kaiju
 
@@ -204,7 +204,7 @@ To add more taxonomic information about each SAG we use Kaiju, which takes our g
 
 The script is simple, just provide the location of the genes from **BRAKER** and the location of the database.
 
-[4-kaiju_faa.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#4-kaiju_faash)
+[4-kaiju_faa.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/4-kaiju_faa.sh)
 
 The script creates single files for each sample so Kaiju can write its 3 output files:
 
@@ -219,7 +219,7 @@ We will only need *_kaiju_faa_names.out for this pipeline but the other files ca
 
 The next step would be to filter out those rows (genes) from `*_kaiju_faa.out` that ended up unclassified (U), so we only keep those that were classified (C). This step should not be necessary but I encountered problems in R when reading files that started with an unclassified gene.  That is because if the row is U it will only have 3 columns, while if the column is C it has more columns. So if the first line of a file has 3 columns, R will read 3 columns and will understand that the whole table will be 3 columns, but it will not because the C rows have more columns and they will not fit in a table that is already stated to have 3 columns. It is a bit of a messy situation and the only way I found to correct this is to just do this simple filter with `grep`:
 
-[5-grep_C_kaiju.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#5-grep_c_kaijush)
+[5-grep_C_kaiju.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/5-grep_C_kaiju.sh)
 
 ### Merge GTF & EggNOG & Kaiju 
 
@@ -227,9 +227,9 @@ The last step in this block will be to merge together the results from the [**gt
 
 Again, very simple script: just make sure to input the `grep_C` Kaiju files from the previous step and the processed gtf files.
 
-[6-use_kaiju_process_TABLE1_FUNCTIONS_ARG.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#6-use_kaiju_process_table1_functions_argsh)
+[6-use_kaiju_process_TABLE1_FUNCTIONS_ARG.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/6-use_kaiju_process_TABLE1_FUNCTIONS_ARG.sh)
 
-[kaiju_process_TABLE1_FUNCTIONS_ARG.R](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#kaiju_process_table1_functions_argr)
+[kaiju_process_TABLE1_FUNCTIONS_ARG.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/kaiju_process_TABLE1_FUNCTIONS_ARG.R)
 
 ***
 # FILTERS
@@ -240,7 +240,7 @@ Now we will start with the process of filtering out those scaffolds from our SAG
 
 The first step would be to find those scaffolds that have Tiara information but **BRAKER** was not able to predict any genes inside them. We are very sure of Tiara's results so we want to keep these scaffolds, it does not matter what **BRAKER** says.
 
-[7-process_leftovers_new_tiara_leuven.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#7-process_leftovers_new_tiara_leuvensh)
+[7-process_leftovers_new_tiara_leuven.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/7-process_leftovers_new_tiara_leuven.sh)
 
 ### Filters 
 
@@ -253,15 +253,15 @@ The following script will also perform 3 filters:
 3. Filter out scaffolds in the range of 1000-3000bp that have **any** hints (EggNOG & Kaiju instances) of being _eukaryotes_ and have **some** (more than 0) hints of being _prokaryotes_.
 
 
-[8-use_kaiju_process_FUNCTIONS_ARG.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#8-use_kaiju_process_functions_argsh)
+[8-use_kaiju_process_FUNCTIONS_ARG.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/8-use_kaiju_process_FUNCTIONS_ARG.sh)
 
-[kaiju_process_FUNCTIONS_ARG_old_pipe.R](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#kaiju_process_functions_arg_old_piper)
+[kaiju_process_FUNCTIONS_ARG_old_pipe.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/kaiju_process_FUNCTIONS_ARG_old_pipe.R)
 
 ### SeqKit grep
 
 Once we have our 3 filters, we can use `seqkit grep` to grab the names of the selected scaffolds to be kept.
 
-[9-seqkit_greps_leuven.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#9-seqkit_greps_leuvensh)
+[9-seqkit_greps_leuven.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/9-seqkit_greps_leuven.sh)
 
 ### QBT
 
