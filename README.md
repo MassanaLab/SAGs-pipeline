@@ -33,7 +33,7 @@ GC1003827_B08
 ### SeqKit
 Checks general statistics of raw files.
 
-[0.1-seqkit_stats.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#01-seqkit_statssh)
+[0.1-seqkit_stats.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/0.1-seqkit_stats.sh)
 
 
 ### Trim Galore
@@ -45,20 +45,20 @@ Uses Cutadapt for the actual trimming process, ensuring flexibility and reliabil
 
 `--length` sets the minimum length for retaining reads after trimming. In our case, we put 75.
 
-[0.2-trimgalore.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#02-trimgaloresh)
+[0.2-trimgalore.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/0.2-trimgalore.sh)
 
 
 ### Seqkit Post Trim Galore
 
 Just repeat SeqKit but now for the trimmed reads. Check that the trimming has been properly done.
 
-[0.3-seqkit_stats_clean.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#02-trimgaloresh)
+[0.3-seqkit_stats_clean.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/0.3-seqkit_stats_clean.sh)
 
 ### Concatenate
 
 In the case of having several sequencing repetitions for each SAG, we need to concatenate all reads that should go together.
 
-[0.5-concatenate.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#05-concatenatesh)
+[0.5-concatenate.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/0.5-concatenate.sh)
 
 ## 1. mTags pipeline
 
@@ -66,7 +66,7 @@ Check the general taxonomy of your reads using 18S-V4 fragments (mTags).
 
 ### Extract reads containing 18S-V4 region signal
 
-[1.1-extraction_blast.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#11-extraction_blastsh)
+[1.1-extraction_blast.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/1.1-extraction_blast.sh)
 
 Performs a basic BLAST of your reads against the eukaryotesV4 blast database. Generates mTags, which show the specific sequence of the hits.
 
@@ -79,7 +79,7 @@ Result:
 
 ### Classify mTags
 
-[1.2-mtags_classification.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#12-mtags_classificationsh)
+[1.2-mtags_classification.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/1.2-mtags_classification.sh)
 
 Generates OTU table. Some additional R scripts are needed to clean and sort the table so it becomes more readable and has a better format for later analyses. 
 
@@ -87,7 +87,7 @@ Result: data/clean/mtags/easig_sags_A105_mtags.fasta & easig_sags_A105_otuTable.
 
 ### Process OTU table
 
-[1.3-process_OTU.R](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#13-process_otur) 
+[1.3-process_OTU.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/1.3-process_OTU.R) 
 
 > (could 100% be better optimized)
 
@@ -95,7 +95,7 @@ Result: data/clean/mtags/easig_sags_A105_mtags.fasta & easig_sags_A105_otuTable.
 
 ### Assemble with SPAdes
 
-[spades_127_sel252.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#spades_127_sel252sh)
+[spades_127_sel252.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/spades_127_sel252.sh)
 
 Unify forward and reverse sequences to obtain the whole genome.
 
@@ -109,14 +109,14 @@ BUSCO (Benchmarking Universal Single-Copy Orthologs): given a database of eukary
 
 Tiara: a deep-learning-based approach for the classification of sequences into eukarya, bacteria, archaea, organelle...
 
-[QBT_DAVID_52.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#qbt_david_52sh)
+[QBT_DAVID_52.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/QBT_DAVID_52.sh)
 
 
 ### Create individual reports for each program.
 
 Takes the most important files of Quast, BUSCO, and Tiara and merges them all to create one report for each program.
 
-[qbt_david_52_report.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#qbt_david_52_reportsh)
+[qbt_david_52_report.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/qbt_david_52_report.sh)
 
 ## R script to summarize all QUAST, BUSCO & Tiara reports into a single report file
 
@@ -124,7 +124,7 @@ From the 3 reports, we take what we consider to be the most relevant columns and
 
 Here I advise creating a new folder on your computer and downloading the `all_reports/` file from your cluster. Then, execute the following script. Maybe it is more comfortable to execute it line by line in R just to check that everything goes well.  
 
-[qbt_david_52_summary.R](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#qbt_david_52_summaryr)
+[qbt_david_52_summary.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/qbt_david_52_summary.R)
 
 # BRAKER
 
@@ -148,15 +148,15 @@ wget  https://bioinf.uni-greifswald.de/bioinf/partitioned_odb11/Eukaryota.fa.gz
 
 Here is a general ideal script for **BRAKER**. Notice how in `cd $LUSTRE_SCRATCH` it's changing the directory to this `LUSTRE_SCRATCH` kinda limbo space and it will create a folder for each sample. Inside this folder is where all the files (lots of files) will be generated. In the end, if everything is finished well, the most important files (_.aa_, _.codingseq_, _.gtf_, _.log_) will be copied to folders in `lustre`, where they are accessible. 
 
-[braker_general.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#braker_generalsh)
+[braker_general.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/2-BRAKER/braker_general.sh)
 
 However, it's really common for some samples to fail. In that case, we don't want **BRAKER** to write things in LUSTRE_SCRATCH because we want to be able to see what is going on. Here is a modified script just for those cases where we don't want to use `LUSTRE_SCRATCH`. It's nothing special, just a script where some lines are commented.
 
-[braker_redo.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#braker_redosh)
+[braker_redo.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/2-BRAKER/braker_redo.sh)
 
 Notice how the script starts with `N=10`. That's the iteration number. Due to the failures, Aleix Obiol discovered a way to fix the problem. It essentially consists of finding the corrupted _nuc\*prot\*_ files inside the **Spaln** folder that **BRAKER** generates. This _nuc\*prot\*_ file has some numbers that are related to proteins inside the database. With the following script, we can remove those proteins that are being problematic and create a new database without them. So each new database will have its iteration number `N` to be used in the `braker_redo.sh` script.
 
-[ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh](https://github.com/gmafer/SAGs-pipeline/wiki/SCRIPTS2#aleix_braker_spaln_solution_seqkit_grep_removesh)
+[ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/2-BRAKER/ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh)
 
 # POST-BRAKER pipeline
 
@@ -164,9 +164,9 @@ Here is the post-braker pipeline, specially designed and refined for the Leuven 
 
 ### Initial step - (re-do) Tiara
 
-The first step would be to check that we have tiara information for our SAGs. This step was already done [here](https://github.com/gmafer/SAGs-pipeline/wiki/SAGs-Alacant-Pipeline#post-assembly-statistics-quast-busco--tiara) but I repeat it here with a script that only runs tiara, just in case the results from QBT were removed. Again, this step is not necessary if you already have tiara results. This step is important because we will need Tiara information in the future of this pipeline.
+The first step would be to check that we have tiara information for our SAGs. This step was already done but I repeat it here with a script that only runs Tiara, just in case the results from QBT were removed. Again, this step won't be necessary if you already have tiara results. This step is important because we will need Tiara's information in the future of this pipeline.
 
-[0-tiara.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/0-tiara.sh)
+[0-tiara.sh]([https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/0-tiara.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/0-tiara.sh))
 
 ### EggNOG-mapper
 
