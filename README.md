@@ -311,7 +311,7 @@ In the last step, we just create the folders and copy there all the files that w
 ***
 # GENE COUNTS
 
-Since we want to count the differet amount of genes that we are keeping on each filter, we need to also do the gene-contig link on filter1 and filter2.
+Since we want to count the different amount of genes that we are keeping on each filter, we need to also do the gene-contig link on filter1 and filter2.
 
 [1-USE_filter_scaffold_gene_FUNCTION_ARG.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/1-USE_filter_scaffold_gene_FUNCTION_ARG.sh)
 
