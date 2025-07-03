@@ -308,3 +308,11 @@ In the last step, we just create the folders and copy there all the files that w
  
 [16-build_leuven_filter3_folders.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16-build_leuven_filter3_folders.sh)
 
+***
+# GENE COUNTS
+
+[1-USE_filter_scaffold_gene_FUNCTION_ARG.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/1-USE_filter_scaffold_gene_FUNCTION_ARG.sh)
+
+[2.1-filter_genes_50aa.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/2.1-filter_genes_50aa.sh)
+
+[2.2-og+3filters_gene_count+50aa_filter.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/2.2-og%2B3filters_gene_count%2B50aa_filter.sh)
