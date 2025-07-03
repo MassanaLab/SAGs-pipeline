@@ -311,8 +311,14 @@ In the last step, we just create the folders and copy there all the files that w
 ***
 # GENE COUNTS
 
+Since we want to count the differet amount of genes that we are keeping on each filter, we need to also do the gene-contig link on filter1 and filter2.
+
 [1-USE_filter_scaffold_gene_FUNCTION_ARG.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/1-USE_filter_scaffold_gene_FUNCTION_ARG.sh)
 
+We also want to have the number of genes that are larger than 50 aminoacids, so we do this seqkit filter.
+
 [2.1-filter_genes_50aa.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/2.1-filter_genes_50aa.sh)
+
+Finally, we put together all the counts in a single final table.
 
 [2.2-og+3filters_gene_count+50aa_filter.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/2.2-og%2B3filters_gene_count%2B50aa_filter.sh)
