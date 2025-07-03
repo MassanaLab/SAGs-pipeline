@@ -1,0 +1,1 @@
+while read -r line; do     col2=$(echo $line | awk '{print $2}');     col3=$(echo $line | awk '{print $3}');      if (( col2 > col3 )); then         echo "Column 2 ($col2) is greater than Column 3 ($col3) in line: $line";     else         echo "Column 2 ($col2) is not greater than Column 3 ($col3) in line: $line";     fi; done < lustre/og+3filters_gene_count.txt | grep not
