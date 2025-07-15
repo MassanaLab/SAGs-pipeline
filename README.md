@@ -87,7 +87,7 @@ Result: data/clean/mtags/easig_sags_A105_mtags.fasta & easig_sags_A105_otuTable.
 
 ### Process OTU table
 
-[1.3-process_OTU.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/1.3-process_OTU.R) 
+[1.3-UPDATED_process_OTU.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/1.3-process_OTU.R) 
 
 > (could 100% be better optimized)
 
