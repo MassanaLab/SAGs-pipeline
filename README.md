@@ -93,14 +93,14 @@ The resulting `.csv` file summarizes the OTU table using the following columns.
 
 | Column           | Description                                                                     |
 | ---------------- | ------------------------------------------------------------------------------- |
-| `sample`         | Sample identifier (from input table column names)                               |
-| `mtags`          | Total number of tags (OTU counts) detected in that sample                       |
-| `main_group`     | Most abundant taxonomic group in the sample (based on summed `mtags`)           |
-| `total_group`    | Total number of tags assigned to `main_group`                                   |
-| `purity(%)`      | Proportion of `mtags` from `main_group` over total tags, as a percentage        |
-| `main_specie`    | Representative species of the `main_group` (the most abundant non-NA OTU)       |
-| `main_OTU_mtags` | Number of tags assigned to the representative OTU of `main_group`               |
-| `other_groups`   | Comma-separated list of other groups detected, with their respective tag counts |
+| `sample`         | Sample identifier (from input table column names).                               |
+| `mtags`          | Total number of tags (OTU counts) detected in that sample.                       |
+| `main_group`     | Most abundant taxonomic group in the sample (based on summed `mtags`).           |
+| `total_group`    | Total number of tags assigned to `main_group`.                                   |
+| `purity(%)`      | Proportion of `mtags` from `main_group` over total tags, as a percentage.        |
+| `main_specie`    | Representative species of the `main_group` (the most abundant non-NA OTU).       |
+| `main_OTU_mtags` | Number of tags assigned to the representative OTU of `main_group`.              |
+| `other_groups`   | Comma-separated list of other groups detected, with their respective tag counts.|
 
 
 ## 2. DNA Assembly
