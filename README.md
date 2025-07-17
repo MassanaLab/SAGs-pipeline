@@ -1,4 +1,6 @@
-# 0. Important remark on array use for sample selection in SLURM scripts
+# SAGs Processing Pipeline
+
+## 0. Important remark on array use for sample selection in SLURM scripts
 
 In some scripts, you will see a line like this:
 
