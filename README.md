@@ -256,8 +256,6 @@ The first step would be to find those scaffolds that have Tiara information but 
 
 Now we will start with the process of filtering out those scaffolds from our SAG that are considered to be prokaryotes. 
 
-
-
 #### 7.2.1 Apply 3 filters
 
 These leftover (lo) scaffolds need to be included inside the tables where we have all the information, so we just add them with their corresponding Tiara information.
@@ -283,7 +281,7 @@ Once we have our 3 filters, we can use `seqkit grep` to grab the names of the se
 
 #### 7.3.1 QUAST, BUSCO, Tiara (QBT)
 
-*1. Run QBT on filtered assemblies*
+**1. Run QBT on filtered assemblies**
 
 Then we can do a QBT analysis (explained before).
 
@@ -291,7 +289,7 @@ Notice the `N=x` variable. Indicate there to which filter (1, 2, or 3) you want 
 
 [10-QBT_test_filterx.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/10-QBT_test_filterx.sh)
 
-*2. Clean QBT output and generate reports*
+**2. Clean QBT output and generate reports**
 
 Here is an extra script just to keep the files from QBT that we will be using and remove the rest.
 
@@ -301,7 +299,7 @@ And do the reports:
 
 [12-QBT_report.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/12-QBT_report.sh)
 
-*3. Summarize filtered QBT results*
+**3. Summarize filtered QBT results**
 
 Move the 3 `all_repotsx` files to a folder in your computer and execute this script in R:
 
@@ -309,19 +307,19 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 
 #### 7.3.2 Gene Count Summaries
 
-*1. Gene-scaffold linking for all filters*
+**1. Gene-scaffold linking for all filters**
 
 Since we want to count the different amount of genes that we are keeping on each filter, we need to also do the gene-contig link on filter1 and filter2.
 
 [1-use_filter_scaffold_gene_FUNCTION_ARG.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/1-use_filter_scaffold_gene_FUNCTION_ARG.sh)
 
-*2. Filter genes longer than 50 amino acids*
+**2. Filter genes longer than 50 amino acids**
 
 We also want to have the number of genes that are larger than 50 aminoacids, so we do this seqkit filter.
 
 [2.1-filter_genes_50aa.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/2.1-filter_genes_50aa.sh)
 
-*3. Summarize gene counts across all filters*
+**3. Summarize gene counts across all filters**
 
 Finally, we put together all the counts in a single final table.
 
