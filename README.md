@@ -344,7 +344,7 @@ Then, we must ensure that each gene inside the final `.aa` and `.codingseq` file
 
 [15-generate_aa+codingseq_hdr.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/15-generate_aa%2Bcodingseq_hdr.sh)
 
-### 8.3 Build the final folders ith key output files
+### 8.3 Build the final folders with key output files
 
 In the last step, we just create the folders and copy there all the files that we consider to be the most important ones.
  
