@@ -225,7 +225,7 @@ The next step would be to filter out those rows (genes) from `*_kaiju_faa.out` t
 
 ### 7.1 Preparing gene annotations files
 
-#### GTF file cleaning and transcript selection
+#### 7.1.1 GTF file cleaning and transcript selection
 
 Then, using this script from @aleixop we will clean up the `.gtf` files from **BRAKER** and merge the information we have from **Tiara** and **EggNOG**.
 
@@ -235,7 +235,7 @@ The cleaning of the `.gtf` files is essentially choosing one transcript per gene
 
 [ALEIX_get_prediction_stats.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/ALEIX_get_prediction_stats.R)
 
-#### Merge GTF + EggNOG + Kaiju annotations
+#### 7.1.2 Merge GTF + EggNOG + Kaiju annotations
 
 The last step in this block will be to merge together the results from the [**gtf file processing**](https://github.com/gmafer/SAGs-pipeline/wiki/SAGs-Alacant-Pipeline#gtf-file-cleaning) step (where we merged gtf & EggNOG) and the result from Kaiju.
 
@@ -245,7 +245,7 @@ Again, very simple script: just make sure to input the `grep_C` Kaiju files from
 
 [kaiju_process_TABLE1_FUNCTIONS_ARG.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/kaiju_process_TABLE1_FUNCTIONS_ARG.R)
 
-#### Identify Tiara-only scaffolds without predictions
+#### 7.1.3 Identify Tiara-only scaffolds without predictions
 
 The first step would be to find those scaffolds that have Tiara information but **BRAKER** was not able to predict any genes inside them. We are very sure of Tiara's results so we want to keep these scaffolds, it does not matter what **BRAKER** says.
 
