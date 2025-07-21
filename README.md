@@ -173,18 +173,11 @@ Notice how the script starts with `N=10`. That's the iteration number. Due to th
 
 [ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/2-BRAKER/ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh)
 
-## 6. Functional and Taxonomic Annotation of the Predicted Genes
+## 6. Gene annotation
 
 Here is the post-braker pipeline, specially designed and refined for the Leuven SAGs.
 
-
-### 6.1 Re-run Tiara (if needed)
-
-The first step would be to check that we have tiara information for our SAGs. This step was already done but I repeat it here with a script that only runs Tiara, just in case the results from QBT were removed. Again, this step won't be necessary if you already have tiara results. This step is important because we will need Tiara's information in the future of this pipeline.
-
-[0-tiara.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/0-tiara.sh)
-
-### 6.2 Functional annotation with EggNOG-mapper
+### 6.1 Functional annotation with EggNOG-mapper
 
 Here we use EggNOG-mapper for functional annotation of genes. It uses its own database, which contains orthologous groups and functional annotations, to assign functions to sequences based on homology. 
 
@@ -204,17 +197,7 @@ In particular, the first 5 lines are very annoying, so we can remove them with t
 
 [2-clean_eggnog_annotation.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/2-clean_eggnog_annotation.sh)
 
-### 6.3 GTF file cleaning and transcript selection
-
-Then, using this script from @aleixop we will clean up the `.gtf` files from **BRAKER** and merge the information we have from **Tiara** and **EggNOG**.
-
-The cleaning of the `.gtf` files is essentially choosing one transcript per gene. Notice how in `.gtf` files we can have more than one transcript for each gene (they are named as _.t1_, _.t2_, _.t3_...) and it becomes really annoying, so with this script we are just keepping longest transcript to make this easier.
-
-[3-use_ALEIX_get_prediction_stats.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/3-use_ALEIX_get_prediction_stats.sh)
-
-[ALEIX_get_prediction_stats.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/ALEIX_get_prediction_stats.R)
-
-### 6.4 Taxonomic Annotation with Kaiju
+### 6.2 Taxonomic Annotation with Kaiju
 
 To add more taxonomic information about each SAG we use Kaiju, which takes our genes from **BRAKER** and assigns them a taxonomy according to its database. Notice that in _CESGA_ and _Marbits_ the database is already downloaded and placed somewhere. If you don't know where it is, it is highly recommended for you to ask, because the database is huge and it will take too much time to download and will occupy too much space in your cluster.
 
@@ -237,7 +220,22 @@ The next step would be to filter out those rows (genes) from `*_kaiju_faa.out` t
 
 [5-grep_C_kaiju.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/5-grep_C_kaiju.sh)
 
-### Merge GTF + EggNOG + Kaiju annotations
+
+## 7. Removing small contigs and contigs with prokaryotic signal 
+
+### 7.1 Preparing gene annotations files
+
+#### GTF file cleaning and transcript selection
+
+Then, using this script from @aleixop we will clean up the `.gtf` files from **BRAKER** and merge the information we have from **Tiara** and **EggNOG**.
+
+The cleaning of the `.gtf` files is essentially choosing one transcript per gene. Notice how in `.gtf` files we can have more than one transcript for each gene (they are named as _.t1_, _.t2_, _.t3_...) and it becomes really annoying, so with this script we are just keepping longest transcript to make this easier.
+
+[3-use_ALEIX_get_prediction_stats.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/3-use_ALEIX_get_prediction_stats.sh)
+
+[ALEIX_get_prediction_stats.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/ALEIX_get_prediction_stats.R)
+
+#### Merge GTF + EggNOG + Kaiju annotations
 
 The last step in this block will be to merge together the results from the [**gtf file processing**](https://github.com/gmafer/SAGs-pipeline/wiki/SAGs-Alacant-Pipeline#gtf-file-cleaning) step (where we merged gtf & EggNOG) and the result from Kaiju.
 
@@ -247,18 +245,20 @@ Again, very simple script: just make sure to input the `grep_C` Kaiju files from
 
 [kaiju_process_TABLE1_FUNCTIONS_ARG.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/kaiju_process_TABLE1_FUNCTIONS_ARG.R)
 
-***
-## 7. Filtering out Prokaryotic Scaffolds
-
-Now we will start with the process of filtering out those scaffolds from our SAG that are considered to be prokaryotes. 
-
-### 7.1 Identify Tiara-only scaffolds without predictions
+#### Identify Tiara-only scaffolds without predictions
 
 The first step would be to find those scaffolds that have Tiara information but **BRAKER** was not able to predict any genes inside them. We are very sure of Tiara's results so we want to keep these scaffolds, it does not matter what **BRAKER** says.
 
 [7-process_leftovers_new_tiara_leuven.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/7-process_leftovers_new_tiara_leuven.sh)
 
-### 7.2 Apply 3 filters
+
+### 7.2 Filtering genome assemblies
+
+Now we will start with the process of filtering out those scaffolds from our SAG that are considered to be prokaryotes. 
+
+
+
+#### 7.2.1 Apply 3 filters
 
 These leftover (lo) scaffolds need to be included inside the tables where we have all the information, so we just add them with their corresponding Tiara information.
 
@@ -273,13 +273,17 @@ The following script will also perform 3 filters:
 
 [kaiju_process_FUNCTIONS_ARG_old_pipe.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/kaiju_process_FUNCTIONS_ARG_old_pipe.R)
 
-### 7.3 Select scaffolds to keep after filtering
+### 7.2.2 Select scaffolds to keep after the 3 filtering
 
 Once we have our 3 filters, we can use `seqkit grep` to grab the names of the selected scaffolds to be kept.
 
 [9-seqkit_greps_leuven.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/9-seqkit_greps_leuven.sh)
 
-### 7.4 Run QBT on filtered assemblies
+### 7.3 Reporting clean assemblies
+
+#### 7.3.1 QUAST, BUSCO, Tiara (QBT)
+
+*1. Run QBT on filtered assemblies*
 
 Then we can do a QBT analysis (explained before).
 
@@ -287,7 +291,7 @@ Notice the `N=x` variable. Indicate there to which filter (1, 2, or 3) you want 
 
 [10-QBT_test_filterx.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/10-QBT_test_filterx.sh)
 
-### 7.5 Clean QBT output and generate reports
+*2. Clean QBT output and generate reports*
 
 Here is an extra script just to keep the files from QBT that we will be using and remove the rest.
 
@@ -297,16 +301,36 @@ And do the reports:
 
 [12-QBT_report.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/12-QBT_report.sh)
 
-### 7.6 Summarize filtered QBT results 
+*3. Summarize filtered QBT results*
 
 Move the 3 `all_repotsx` files to a folder in your computer and execute this script in R:
 
 [13-QBT_LEUVEN_summary_final_filters.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/13-QBT_LEUVEN_summary_final_filters.R)
 
-***
+#### 7.3.2 Gene Count Summaries
+
+*1. Gene-scaffold linking for all filters*
+
+Since we want to count the different amount of genes that we are keeping on each filter, we need to also do the gene-contig link on filter1 and filter2.
+
+[1-use_filter_scaffold_gene_FUNCTION_ARG.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/1-use_filter_scaffold_gene_FUNCTION_ARG.sh)
+
+*2. Filter genes longer than 50 amino acids*
+
+We also want to have the number of genes that are larger than 50 aminoacids, so we do this seqkit filter.
+
+[2.1-filter_genes_50aa.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/2.1-filter_genes_50aa.sh)
+
+*3. Summarize gene counts across all filters*
+
+Finally, we put together all the counts in a single final table.
+
+[2.2-og+3filters_gene_count+50aa_filter.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/2.2-og%2B3filters_gene_count%2B50aa_filter.sh)
+
+
 ## 8. Gene-Scaffold Linking and Final Folders Generation 
 
-### 8.1 Link genes to scaffolds
+### 8.1 Link genes to contigs
 
 Finally, the last (optional) step is to create what we call a "final folder" that contains all the most important files generated during the whole pipeline.
 
@@ -328,23 +352,5 @@ In the last step, we just create the folders and copy there all the files that w
  
 [16-build_leuven_filter3_folders.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16-build_leuven_filter3_folders.sh)
 
-***
-## 9. Gene Count Summaries
 
-### 9.1 Gene-scaffold linking for all filters
 
-Since we want to count the different amount of genes that we are keeping on each filter, we need to also do the gene-contig link on filter1 and filter2.
-
-[1-use_filter_scaffold_gene_FUNCTION_ARG.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/1-use_filter_scaffold_gene_FUNCTION_ARG.sh)
-
-### 9.2 Filter genes longer than 50 amino acids
-
-We also want to have the number of genes that are larger than 50 aminoacids, so we do this seqkit filter.
-
-[2.1-filter_genes_50aa.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/2.1-filter_genes_50aa.sh)
-
-### 9.3 Summarize gene counts across all filters
-
-Finally, we put together all the counts in a single final table.
-
-[2.2-og+3filters_gene_count+50aa_filter.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/2.2-og%2B3filters_gene_count%2B50aa_filter.sh)
