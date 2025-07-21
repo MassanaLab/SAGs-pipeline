@@ -271,7 +271,7 @@ The following script will also perform 3 filters:
 
 [kaiju_process_FUNCTIONS_ARG_old_pipe.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/kaiju_process_FUNCTIONS_ARG_old_pipe.R)
 
-### 7.2.2 Select scaffolds to keep after the 3 filtering
+#### 7.2.2 Select scaffolds to keep after the 3 filtering
 
 Once we have our 3 filters, we can use `seqkit grep` to grab the names of the selected scaffolds to be kept.
 
