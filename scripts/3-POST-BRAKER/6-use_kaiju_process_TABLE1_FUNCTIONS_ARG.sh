@@ -1,24 +1,26 @@
 #!/bin/bash
 
-#SBATCH --time=00:10:00
-#SBATCH --job-name=kaiju_leuven_table1
+#SBATCH --time=00:05:00
+#SBATCH --job-name=kaiju_coass_juliol_table1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem=5GB
-#SBATCH --output=data/logs/kaiju_leuven_t1_%A_%a.out
-#SBATCH --error=data/logs/kaiju_leuven_t1_%A_%a.err
-#SBATCH --array=51-74%10
+#SBATCH --mem=2GB
+#SBATCH --output=data/logs/kaiju_coass_juliol_t1_%A_%a.out
+#SBATCH --error=data/logs/kaiju_coass_juliol_t1_%A_%a.err
+#SBATCH --array=1-3%3
+
+W=coass_juliol
 
 
-SAMPLE=$(cat data/clean/Leuven_SAGs_sel_74.txt | awk "NR == ${SLURM_ARRAY_TASK_ID}") # 74
+SAMPLE=$(cat data/clean/names_${W}.txt | awk "NR == ${SLURM_ARRAY_TASK_ID}") # 3
 
-OUT=~/lustre/tables1_leuven
+OUT=~/lustre/tables1_${W}
 
 mkdir -p ${OUT}
 
-KAIJU_FILE=~/store/kaiju_Leuven_grep_C/${SAMPLE}_kaiju_faa_names_grep_C.out
+KAIJU_FILE=~/lustre/kaiju_${W}_grep_C/${SAMPLE}_kaiju_faa_names_grep_C.out
 
-PROC_GTF_FILE=~/lustre/aleix_gtf_Leuven_process_out/${SAMPLE}_gtf_processed.txt
+PROC_GTF_FILE=~/lustre/aleix_gtf_${W}_process_out/${SAMPLE}_gtf_processed.txt
 
 OUT_FILE=${OUT}/${SAMPLE}_table1.tsv
 
