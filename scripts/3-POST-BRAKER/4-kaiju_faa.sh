@@ -1,27 +1,31 @@
 #!/bin/bash
 
-#SBATCH --time=01:00:00
-#SBATCH --job-name=kaiju_faa
+#SBATCH --time=12:00:00
+#SBATCH --job-name=kaiju
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=24
-#SBATCH --mem=200G
-#SBATCH --output=data/logs/kaiju_faa_61_%A_%a.out
-#SBATCH --error=data/logs/kaiju_faa_61_%A_%a.err
-#SBATCH --array=1-61%8
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=250G
+#SBATCH --output=data/logs/kaiju_coass_juliol_%A_%a.out
+#SBATCH --error=data/logs/kaiju_coass_juliol_%A_%a.err
+#SBATCH --array=1-3%3
 
-SAMPLE=$(ls store/braker_LEUVEN/aa/ | awk -F "_" '{print $1"_"$2}' | awk "NR == ${SLURM_ARRAY_TASK_ID}") #61
+### esto en marbits suele ir mas rapido, /mnt/smart/users/gmarimon/KAIJU_coass_v5/
+
+W=coass_juliol
+
+SAMPLE=$(cat data/clean/names_${W}.txt | awk "NR == ${SLURM_ARRAY_TASK_ID}") # 3
 
 # Fasta file
 
-FAA=store/braker_LEUVEN/aa/${SAMPLE}_augustus.hints.aa
+FAA=store/braker_${W}/aa/${SAMPLE}_augustus.hints.aa
 
 # Out dir and filenames
 
-OUT_DIR=lustre/kaiju_leuven_61/${SAMPLE}
+OUT_DIR=lustre/kaiju_${W}/${SAMPLE}
 
 mkdir -p ${OUT_DIR}
 
-THREADS=24
+THREADS=8
 
 # Load modules
 
