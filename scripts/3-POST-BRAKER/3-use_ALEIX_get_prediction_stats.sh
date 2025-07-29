@@ -1,21 +1,22 @@
 #!/bin/bash
 
-#SBATCH --time=00:02:00
-#SBATCH --job-name=gtf_leuven_process
+#SBATCH --time=00:05:00
+#SBATCH --job-name=gtf_aleix_process
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=1GB
-#SBATCH --output=data/logs/aleix_gtf_LEUVEN_%A_%a.out
-#SBATCH --error=data/logs/aleix_gtf_LEUVEN_%A_%a.err
-#SBATCH --array=51-61%3
+#SBATCH --output=data/logs/aleix_gtf_coass_juliol_%A_%a.out
+#SBATCH --error=data/logs/aleix_gtf_coass_juliol_%A_%a.err
+#SBATCH --array=1-3%3
 
+W=coass_juliol
 
-SAMPLE=$(ls lustre/braker_LEUVEN/gtf/ | awk -F "_" '{print $1"_"$2}' | awk "NR == ${SLURM_ARRAY_TASK_ID}") #61
+SAMPLE=$(cat data/clean/names_${W}.txt | awk "NR == ${SLURM_ARRAY_TASK_ID}") # 3
 
-GTF=~/lustre/braker_LEUVEN/gtf
-EMAPP=~/lustre/eggnog_LEUVEN_clean_skip4
-TIARA=~/store/tiara_61
-OUT=~/lustre/aleix_gtf_Leuven_process_out
+GTF=~/store/braker_${W}/gtf/
+EMAPP=~/lustre/eggnog_${W}_clean_skip4/
+TIARA=~/lustre/qbt_coassembly_filter1000_juliol/tiara
+OUT=~/lustre/aleix_gtf_${W}_process_out
 
 mkdir -p ${OUT}
 
