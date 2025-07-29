@@ -1,12 +1,16 @@
 #!/bin/bash
 
-OUT=~/lustre/eggnog_LEUVEN_clean_skip4
+W=coass_juliol
+
+OUT=~/lustre/eggnog_${W}_clean_skip4
 
 mkdir -p ${OUT}
 
-for SAMPLE in $(ls ~/lustre/eggnog_LEUVEN/ | awk -F "_" '{print $1"_"$2}')
+E=lustre/eggnog_${W}
+
+for SAMPLE in $(ls ${E} | awk -F "_" '{print $1"_"$2"_"$3}')
 do
 
- tail -n +5 ~/lustre/eggnog_LEUVEN/${SAMPLE}/${SAMPLE}_eggnog.emapper.annotations | sed 's/#//g' > ${OUT}/${SAMPLE}_eggnog.emapper.annotations_clean
+ tail -n +5 ${E}/${SAMPLE}/${SAMPLE}_eggnog.emapper.annotations | sed 's/#//g' > ${OUT}/${SAMPLE}_eggnog.emapper.annotations_clean
 
 done
