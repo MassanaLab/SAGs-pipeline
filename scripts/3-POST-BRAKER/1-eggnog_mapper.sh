@@ -5,18 +5,20 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=10GB
-#SBATCH --output=data/logs/eggnog_leuven_%A_%a.out
-#SBATCH --error=data/logs/eggnog_leuven_%A_%a.err
-#SBATCH --array=101-150%2
+#SBATCH --output=data/logs/eggnog_coass_juliol_%A_%a.out
+#SBATCH --error=data/logs/eggnog_coass_juliol_%A_%a.err
+#SBATCH --array=1-3%3
 
 module load cesga/2020  gcccore/system eggnog-mapper/2.1.10
 
 
-AA=~/lustre/braker_LEUVEN/aa
+W=coass_juliol
 
-SAMPLE=$(ls lustre/braker_LEUVEN/aa/ | awk -F "_" '{print $1"_"$2}' | awk "NR == ${SLURM_ARRAY_TASK_ID}") # 61
+AA=~/store/braker_${W}/aa
 
-DATA_OUT=~/lustre/eggnog_LEUVEN/${SAMPLE}
+SAMPLE=$(cat data/clean/names_${W}.txt | awk "NR == ${SLURM_ARRAY_TASK_ID}") # 3
+
+DATA_OUT=~/lustre/eggnog_${W}/${SAMPLE}
 
 mkdir -p ${DATA_OUT}
 
