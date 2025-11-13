@@ -124,22 +124,7 @@ BUSCO (Benchmarking Universal Single-Copy Orthologs): given a database of eukary
 
 Tiara: a deep-learning-based approach for the classification of sequences into eukarya, bacteria, archaea, organelle...
 
-[QBT_DAVID_52.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/QBT_DAVID_52.sh)
-
-
-### 4.2 Generate individual reports for each program
-
-Takes the most important files of Quast, BUSCO, and Tiara and merges them all to create one report for each program.
-
-[qbt_david_52_report.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/qbt_david_52_report.sh)
-
-### 4.3 Summarize all QUAST, BUSCO & Tiara reports into a final table
-
-From the 3 reports, we take what we consider to be the most relevant columns and create one single final report.
-
-Here I advise creating a new folder on your computer and downloading the `all_reports/` file from your cluster. Then, execute the following script. Maybe it is more comfortable to execute it line by line in R just to check that everything goes well.  
-
-[qbt_david_52_summary.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/qbt_david_52_summary.R)
+All information on how to run QBT [here](https://github.com/MassanaLab/QBT-pipeline).
 
 ## 5. Gene prediction with BRAKER
 
