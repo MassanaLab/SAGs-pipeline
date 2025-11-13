@@ -28,3 +28,20 @@ cd ${DATA_OUT}
 #source activate eggnog-mapper
 
 emapper.py -i ${AA}/${SAMPLE}_augustus.hints.aa -o ${SAMPLE}_eggnog --cpu 8
+
+# ---------------------- skip 4 ----------------------
+# Clean annotations: skip first 4 header lines and remove '#'
+OUT=~/lustre/eggnog_${W}_clean_skip4
+mkdir -p "${OUT}"
+
+E=~/lustre/eggnog_${W}
+in_file="${E}/${SAMPLE}/${SAMPLE}_eggnog.emapper.annotations"
+out_file="${OUT}/${SAMPLE}_eggnog.emapper.annotations_clean"
+
+if [[ -f "$in_file" ]]; then
+  tail -n +5 "$in_file" | sed 's/#//g' > "$out_file"
+  echo "Cleaned: $out_file"
+else
+  echo "Skip cleaning (missing: $in_file)"
+fi
+# ---------------------------------------------------------------
