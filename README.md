@@ -158,15 +158,31 @@ Notice how the script starts with `N=10`. That's the iteration number. Due to th
 
 [ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/2-BRAKER/ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh)
 
-## 6. Gene annotation
+## 6. BRAKER Gene Predictions Processing
+
+After running BRAKER to predict genes on each SAG assembly, we applied a three-step post-processing pipeline to clean headers, standardize annotation files, filter gene models, and generate the final curated FAA and GFF3 outputs.
+
+The first step is to prepare a clean, standardized dataset for all SAGs before applying any filtering. This script ensures that every sample has a clean assembly and GTF with matching contig headers, which is essential before running gene-length filtering.
+
+[1-build_ingredients_and_clean_headers.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/1-build_ingredients_and_clean_headers.sh)
+
+Then we proceed with the processing of each gtf file. The following script produces high-confidence, longest-isoform, ≥50 aa gene sets for each sample.
+
+[2-process_gtf_filter1.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/2-process_gtf_filter1.sh)
+
+Finally, we collect all processed results and produce the final curated gene datasets.
+
+[3-final_gff_final_faa.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/3-final_gff_final_faa.sh)
+
+## 7. Gene annotation
 
 Here is the post-braker pipeline, specially designed and refined for the Leuven SAGs.
 
-### 6.1 Functional annotation with EggNOG-mapper
+### 7.1 Functional annotation with EggNOG-mapper
 
 Here we use EggNOG-mapper for functional annotation of genes. It uses its own database, which contains orthologous groups and functional annotations, to assign functions to sequences based on homology. 
 
-[1-eggnog_mapper.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/1-eggnog_mapper.sh)
+[4-eggnog_mapper+skip4.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/4-eggnog_mapper+skip4.sh)
 
 In this script, I create a singular file for each sample. It is inside this file where EggNOG-mapper will create 3 files:
 
@@ -176,19 +192,16 @@ In this script, I create a singular file for each sample. It is inside this file
 
 -*.seed_orthologs
 
-All 3 files are interesting but in our case, we only focus on the `.anotations` one. If you open it with Excel you will see a big file with lots of data. Don't worry, in the following steps, we will be cleaning and selecting only those rows that are useful to us. 
+All 3 files are interesting but in our case, we only focus on the `.anotations` one. If you open it with Excel you will see a big file with lots of data. Don't worry, in the following steps, we will be cleaning and selecting only those rows that are useful to us. But since the first 5 lines on the `.anotations` file are very annoying, we start by removing them and putting all clean eggnog files in the same folder.
 
-In particular, the first 5 lines are very annoying, so we can remove them with this script:
 
-[2-clean_eggnog_annotation.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/2-clean_eggnog_annotation.sh)
-
-### 6.2 Taxonomic Annotation with Kaiju
+### 7.2 Taxonomic Annotation with Kaiju
 
 To add more taxonomic information about each SAG we use Kaiju, which takes our genes from **BRAKER** and assigns them a taxonomy according to its database. Notice that in _CESGA_ and _Marbits_ the database is already downloaded and placed somewhere. If you don't know where it is, it is highly recommended for you to ask, because the database is huge and it will take too much time to download and will occupy too much space in your cluster.
 
 The script is simple, just provide the location of the genes from **BRAKER** and the location of the database.
 
-[4-kaiju_faa.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/4-kaiju_faa.sh)
+[5-kaiju_faa+grep_C.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/5-kaiju_faa+grep_C.sh)
 
 The script creates single files for each sample so Kaiju can write its 3 output files:
 
@@ -200,10 +213,7 @@ The script creates single files for each sample so Kaiju can write its 3 output 
 
 We will only need *_kaiju_faa_names.out for this pipeline but the other files can also be useful for other purposes.
 
-
-The next step would be to filter out those rows (genes) from `*_kaiju_faa.out` that ended up unclassified (U), so we only keep those that were classified (C). This step should not be necessary but I encountered problems in R when reading files that started with an unclassified gene.  That is because if the row is U it will only have 3 columns, while if the column is C it has more columns. So if the first line of a file has 3 columns, R will read 3 columns and will understand that the whole table will be 3 columns, but it will not because the C rows have more columns and they will not fit in a table that is already stated to have 3 columns. It is a bit of a messy situation and the only way I found to correct this is to just do this simple filter with `grep`:
-
-[5-grep_C_kaiju.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/5-grep_C_kaiju.sh)
+In the same script we also filter out those rows (genes) from `*_kaiju_faa.out` that ended up unclassified (U), so we only keep those that were classified (C). This step should not be necessary but I encountered problems in R when reading files that started with an unclassified gene.  That is because if the row is U it will only have 3 columns, while if the column is C it has more columns. So if the first line of a file has 3 columns, R will read 3 columns and will understand that the whole table will be 3 columns, but it will not because the C rows have more columns and they will not fit in a table that is already stated to have 3 columns. It is a bit of a messy situation and the only way I found to correct this is to just do this simple filter with `grep`:
 
 
 ## 7. Removing small contigs and contigs with prokaryotic signal 
@@ -216,9 +226,15 @@ Then, using this script from @aleixop we will clean up the `.gtf` files from **B
 
 The cleaning of the `.gtf` files is essentially choosing one transcript per gene. Notice how in `.gtf` files we can have more than one transcript for each gene (they are named as _.t1_, _.t2_, _.t3_...) and it becomes really annoying, so with this script we are just keepping longest transcript to make this easier.
 
-[3-use_ALEIX_get_prediction_stats.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/3-use_ALEIX_get_prediction_stats.sh)
+[7.1-GFF_use_ALEIX_get_prediction_stats.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/3-use_ALEIX_get_prediction_stats.sh)
+
+Then we can check if gene counts are consistent between files and everything went according to plan. It justs compares how many protein sequences there are in the FASTA file (\*_filter1_genes.faa) and how many gene rows there are in the corresponding processed table (\*_gff_processed.txt (lines minus the header)).
 
 [ALEIX_get_prediction_stats.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/ALEIX_get_prediction_stats.R)
+
+[7.2-check_GFF3_vs_FAA.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/7.2-check_GFF3_vs_FAA.sh)
+
+
 
 #### 7.1.2 Merge GTF + EggNOG + Kaiju annotations
 
