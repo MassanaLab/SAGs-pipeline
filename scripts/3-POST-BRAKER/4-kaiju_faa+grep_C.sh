@@ -53,3 +53,12 @@ kaiju2table \
  -n /mnt/netapp2/bio_databases/kaiju_db_nr_euk/names.dmp \
  -r genus \
  -o ${OUT_DIR}/${SAMPLE}_kaiju_faa_summary.tsv ${OUT_DIR}/${SAMPLE}_kaiju_faa.out
+
+# ---------------------- grep C ----------------------
+# Grep lines with classification "C" for this SAMPLE (no loop)
+OUT=~/lustre/kaiju_${W}_grep_C
+mkdir -p "${OUT}"
+
+grep -w "C" "${OUT_DIR}/${SAMPLE}_kaiju_faa_names.out" > "${OUT}/${SAMPLE}_kaiju_faa_names_grep_C.out" || true
+echo "Grep C -> ${OUT}/${SAMPLE}_kaiju_faa_names_grep_C.out"
+# ---------------------------------------------------------------
