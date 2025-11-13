@@ -30,4 +30,4 @@ TIARA_FILE=${TIARA}/${SAMPLE}
 OUT_FILE=${OUT}/${SAMPLE}_gtf_processed.txt
 
 
-Rscript ~/scripts/leuven/Rscripts/ALEIX_get_prediction_stats.R ${GTF_FILE} ${EMAPPER_FILE} ${TIARA_FILE} ${OUT_FILE}
+Rscript ~/scripts/leuven/Rscripts/ALEIX_get_prediction_stats_v2.R ${GTF_FILE} ${EMAPPER_FILE} ${TIARA_FILE} ${OUT_FILE}
