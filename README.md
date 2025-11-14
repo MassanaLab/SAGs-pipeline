@@ -242,7 +242,7 @@ The last step in this block will be to merge together the results from the [**gt
 
 Again, very simple script: just make sure to input the `grep_C` Kaiju files from the previous step and the processed gtf files.
 
-[6-use_kaiju_process_TABLE1_FUNCTIONS_ARG.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/6-use_kaiju_process_TABLE1_FUNCTIONS_ARG.sh)
+[8-use_kaiju_process_TABLE1_FUNCTIONS_ARG.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/8-use_kaiju_process_TABLE1_FUNCTIONS_ARG.sh)
 
 [kaiju_process_TABLE1_FUNCTIONS_ARG.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/kaiju_process_TABLE1_FUNCTIONS_ARG.R)
 
@@ -250,7 +250,7 @@ Again, very simple script: just make sure to input the `grep_C` Kaiju files from
 
 The first step would be to find those scaffolds that have Tiara information but **BRAKER** was not able to predict any genes inside them. We are very sure of Tiara's results so we want to keep these scaffolds, it does not matter what **BRAKER** says.
 
-[7-process_leftovers_new_tiara_leuven.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/7-process_leftovers_new_tiara_leuven.sh)
+[9-process_leftovers_new_tiara_leuven.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/9-process_leftovers_new_tiara_leuven.sh)
 
 
 ### 7.2 Filtering genome assemblies
@@ -268,7 +268,7 @@ The following script will also perform 3 filters:
 3. Filter out scaffolds in the range of 1000-3000bp that have **any** hints (EggNOG & Kaiju instances) of being _eukaryotes_ and have **some** (more than 0) hints of being _prokaryotes_.
 
 
-[8-use_kaiju_process_FUNCTIONS_ARG.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/8-use_kaiju_process_FUNCTIONS_ARG.sh)
+[10-use_kaiju_process_FUNCTIONS_ARG.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/10-use_kaiju_process_FUNCTIONS_ARG.sh)
 
 [kaiju_process_FUNCTIONS_ARG_old_pipe.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/kaiju_process_FUNCTIONS_ARG_old_pipe.R)
 
@@ -276,35 +276,73 @@ The following script will also perform 3 filters:
 
 Once we have our 3 filters, we can use `seqkit grep` to grab the names of the selected scaffolds to be kept.
 
-[9-seqkit_greps_leuven.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/9-seqkit_greps_leuven.sh)
+[11.1-seqkit_greps_leuven.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/11.1-seqkit_greps_leuven.sh)
+
+[11.2-quick_filters_report.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/11.2-quick_filters_report.sh)
 
 ### 7.3 Reporting clean assemblies
 
 #### 7.3.1 QUAST, BUSCO, Tiara (QBT)
 
-**1. Run QBT on filtered assemblies**
+**1. Run QBT on filtered assemblies and clean unnecessary files**
 
 Then we can do a QBT analysis (explained before).
 
 Notice the `N=x` variable. Indicate there to which filter (1, 2, or 3) you want to do QBT.
 
-[10-QBT_test_filterx.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/10-QBT_test_filterx.sh)
+[12-QBT_filterx+cleanning.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/12-QBT_filterx+cleanning.sh)
 
-**2. Clean QBT output and generate reports**
+**2. Generate reports**
 
-Here is an extra script just to keep the files from QBT that we will be using and remove the rest.
-
-[11-QB_cleanning.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/11-QB_cleanning.sh)
-
-And do the reports:
-
-[12-QBT_report.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/12-QBT_report.sh)
+[14-QBT_report.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/14-QBT_report.sh)
 
 **3. Summarize filtered QBT results**
 
+*on your computer*
+
 Move the 3 `all_repotsx` files to a folder in your computer and execute this script in R:
 
-[13-QBT_LEUVEN_summary_final_filters.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/13-QBT_LEUVEN_summary_final_filters.R)
+[QBT_LEUVEN_summary_final_filters.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/QBT_LEUVEN_summary_final_filters.R)
+
+*on hpc cluster*
+
+[15-make_QBT_summary_filters.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/15-make_QBT_summary_filters.R)
+
+## POST FILTER 3
+
+[16-braker3_post_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16-braker3_post_filter3.sh)
+
+[17-rename_and_organize.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/17-rename_and_organize.sh)
+
+[18-build_ingredients_and_clean_headers_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/18-build_ingredients_and_clean_headers_filter3.sh)
+
+[19-process_gtf_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/19-process_gtf_filter3.sh)
+
+[20-final_gff_final_faa_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20-final_gff_final_faa_filter3.sh)
+
+[21-eggnog_mapper_filter3+skip4.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21-eggnog_mapper_filter3%2Bskip4.sh)
+
+[22.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/22.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh)
+
+[22.2-check_GFF3_vs_FAA_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/22.2-check_GFF3_vs_FAA_filter3.sh)
+
+[23-genes_filter50.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/23-genes_filter50.sh)
+
+[24-gene_count_report.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/24-gene_count_report.sh)
+
+[25-og_QUAST+cleanning.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/25-og_QUAST%2Bcleanning.sh)
+
+[26-og_new_QUAST_report.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/26-og_new_QUAST_report.sh)
+
+[27-quast_only_summary.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/27-quast_only_summary.R)
+
+[28-replace_0Mb_col.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/28-replace_0Mb_col.sh)
+
+
+
+
+
+
 
 #### 7.3.2 Gene Count Summaries
 
