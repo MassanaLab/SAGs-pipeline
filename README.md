@@ -338,7 +338,18 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 
 [28-replace_0Mb_col.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/28-replace_0Mb_col.sh)
 
-[]()
+[29.1.1-filter1_initial.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.1.1-filter1_initial.sh)
+
+[29.1.2-filter3_initial.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.1.2-filter3_initial.sh)
+
+[29.2-interproscans.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.2-interproscans.sh)
+
+[29.3-excluded.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.3-excluded.sh)
+
+[29.4-made_withs.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.4-made_withs.sh)
+
+
+
 
 
 
