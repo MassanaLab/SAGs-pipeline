@@ -338,7 +338,7 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 
 [28-replace_0Mb_col.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/28-replace_0Mb_col.sh)
 
-
+[]()
 
 
 
