@@ -216,11 +216,11 @@ We will only need *_kaiju_faa_names.out for this pipeline but the other files ca
 In the same script we also filter out those rows (genes) from `*_kaiju_faa.out` that ended up unclassified (U), so we only keep those that were classified (C). This step should not be necessary but I encountered problems in R when reading files that started with an unclassified gene.  That is because if the row is U it will only have 3 columns, while if the column is C it has more columns. So if the first line of a file has 3 columns, R will read 3 columns and will understand that the whole table will be 3 columns, but it will not because the C rows have more columns and they will not fit in a table that is already stated to have 3 columns. It is a bit of a messy situation and the only way I found to correct this is to just do this simple filter with `grep`:
 
 
-## 7. Removing small contigs and contigs with prokaryotic signal 
+## 8. Removing small contigs and contigs with prokaryotic signal 
 
-### 7.1 Preparing gene annotations files
+### 8.1 Preparing gene annotations files
 
-#### 7.1.1 GTF file cleaning and transcript selection
+#### 8.1.1 GTF file cleaning and transcript selection
 
 Then, using this script from @aleixop we will clean up the `.gtf` files from **BRAKER** and merge the information we have from **Tiara** and **EggNOG**.
 
@@ -236,7 +236,7 @@ Then we can check if gene counts are consistent between files and everything wen
 
 
 
-#### 7.1.2 Merge GTF + EggNOG + Kaiju annotations
+#### 8.1.2 Merge GTF + EggNOG + Kaiju annotations
 
 The last step in this block will be to merge together the results from the [**gtf file processing**](https://github.com/gmafer/SAGs-pipeline/wiki/SAGs-Alacant-Pipeline#gtf-file-cleaning) step (where we merged gtf & EggNOG) and the result from Kaiju.
 
@@ -246,18 +246,18 @@ Again, very simple script: just make sure to input the `grep_C` Kaiju files from
 
 [kaiju_process_TABLE1_FUNCTIONS_ARG.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/kaiju_process_TABLE1_FUNCTIONS_ARG.R)
 
-#### 7.1.3 Identify Tiara-only scaffolds without predictions
+#### 8.1.3 Identify Tiara-only scaffolds without predictions
 
 The first step would be to find those scaffolds that have Tiara information but **BRAKER** was not able to predict any genes inside them. We are very sure of Tiara's results so we want to keep these scaffolds, it does not matter what **BRAKER** says.
 
 [9-process_leftovers_new_tiara_leuven.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/9-process_leftovers_new_tiara_leuven.sh)
 
 
-### 7.2 Filtering genome assemblies
+### 8.2 Filtering genome assemblies
 
 Now we will start with the process of filtering out those scaffolds from our SAG that are considered to be prokaryotes. 
 
-#### 7.2.1 Apply 3 filters
+#### 8.2.1 Apply 3 filters
 
 These leftover (lo) scaffolds need to be included inside the tables where we have all the information, so we just add them with their corresponding Tiara information.
 
@@ -272,7 +272,7 @@ The following script will also perform 3 filters:
 
 [kaiju_process_FUNCTIONS_ARG_old_pipe.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/kaiju_process_FUNCTIONS_ARG_old_pipe.R)
 
-#### 7.2.2 Select scaffolds to keep after the 3 filtering
+#### 8.2.2 Select scaffolds to keep after the 3 filtering
 
 Once we have our 3 filters, we can use `seqkit grep` to grab the names of the selected scaffolds to be kept.
 
@@ -280,9 +280,9 @@ Once we have our 3 filters, we can use `seqkit grep` to grab the names of the se
 
 [11.2-quick_filters_report.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/11.2-quick_filters_report.sh)
 
-### 7.3 Reporting clean assemblies
+### 8.3 Reporting clean assemblies
 
-#### 7.3.1 QUAST, BUSCO, Tiara (QBT)
+#### 8.3.1 QUAST, BUSCO, Tiara (QBT)
 
 **1. Run QBT on filtered assemblies and clean unnecessary files**
 
@@ -355,7 +355,7 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 
 
 
-#### 7.3.2 Gene Count Summaries
+#### 8.3.2 Gene Count Summaries
 
 **1. Gene-scaffold linking for all filters**
 
@@ -376,9 +376,9 @@ Finally, we put together all the counts in a single final table.
 [2.2-og+3filters_gene_count+50aa_filter.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/2.2-og%2B3filters_gene_count%2B50aa_filter.sh)
 
 
-## 8. Gene-Scaffold Linking and Final Folders Generation 
+## 9. Gene-Scaffold Linking and Final Folders Generation 
 
-### 8.1 Link genes to contigs
+### 9.1 Link genes to contigs
 
 Finally, the last (optional) step is to create what we call a "final folder" that contains all the most important files generated during the whole pipeline.
 
@@ -388,13 +388,13 @@ The first step links each scaffold with its set of genes:
 
 [filter_scaffold_gene_FUNCTION_ARG.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/filter_scaffold_gene_FUNCTION_ARG.R)
 
-### 8.2 Add SAG name to fasta headers
+### 9.2 Add SAG name to fasta headers
 
 Then, we must ensure that each gene inside the final `.aa` and `.codingseq` files has the name of the SAG before the name of the gene, so for posterior analyses we will always have very clear what gene from which SAG we are looking at.
 
 [15-generate_aa+codingseq_hdr.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/15-generate_aa%2Bcodingseq_hdr.sh)
 
-### 8.3 Build the final folders with key output files
+### 9.3 Build the final folders with key output files
 
 In the last step, we just create the folders and copy there all the files that we consider to be the most important ones.
  
