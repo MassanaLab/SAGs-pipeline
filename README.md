@@ -326,9 +326,9 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 
 [22.2-check_GFF3_vs_FAA_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/22.2-check_GFF3_vs_FAA_filter3.sh)
 
-[23-genes_filter50.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/23-genes_filter50.sh)
+[23-genes_filter50_100_200.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/23-genes_filter50_100_200.sh)
 
-[24-gene_count_report.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/24-gene_count_report.sh)
+[24-gene_count50_100_200.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/24-gene_count50_100_200.sh)
 
 [25-og_QUAST+cleanning.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/25-og_QUAST%2Bcleanning.sh)
 
@@ -347,54 +347,6 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 [29.3-excluded.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.3-excluded.sh)
 
 [29.4-made_withs.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.4-made_withs.sh)
-
-
-
-
-
-
-
-
-#### 8.3.2 Gene Count Summaries
-
-**1. Gene-scaffold linking for all filters**
-
-Since we want to count the different amount of genes that we are keeping on each filter, we need to also do the gene-contig link on filter1 and filter2.
-
-[1-use_filter_scaffold_gene_FUNCTION_ARG.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/1-use_filter_scaffold_gene_FUNCTION_ARG.sh)
-
-**2. Filter genes longer than 50 amino acids**
-
-We also want to have the number of genes that are larger than 50 aminoacids, so we do this seqkit filter.
-
-[2.1-filter_genes_50aa.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/2.1-filter_genes_50aa.sh)
-
-**3. Summarize gene counts across all filters**
-
-Finally, we put together all the counts in a single final table.
-
-[2.2-og+3filters_gene_count+50aa_filter.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/4-GENE_COUNTS/2.2-og%2B3filters_gene_count%2B50aa_filter.sh)
-
-
-## 9. Gene-Scaffold Linking and Final Folders Generation 
-
-### 9.1 Link genes to contigs
-
-Finally, the last (optional) step is to create what we call a "final folder" that contains all the most important files generated during the whole pipeline.
-
-The first step links each scaffold with its set of genes:
-
-[14-use_filter_scaffold_gene_FUNCTION_ARG.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/14-use_filter_scaffold_gene_FUNCTION_ARG.sh)
-
-[filter_scaffold_gene_FUNCTION_ARG.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/filter_scaffold_gene_FUNCTION_ARG.R)
-
-### 9.2 Add SAG name to fasta headers
-
-Then, we must ensure that each gene inside the final `.aa` and `.codingseq` files has the name of the SAG before the name of the gene, so for posterior analyses we will always have very clear what gene from which SAG we are looking at.
-
-[15-generate_aa+codingseq_hdr.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/15-generate_aa%2Bcodingseq_hdr.sh)
-
-### 9.3 Build the final folders with key output files
 
 In the last step, we just create the folders and copy there all the files that we consider to be the most important ones.
  
