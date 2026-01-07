@@ -310,6 +310,8 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 
 ## POST FILTER 3
 
+Here we repeat the same process applied on filter1 genomes, but now with filter3 genomes.
+
 [16-braker3_post_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16-braker3_post_filter3.sh)
 
 [17-rename_and_organize.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/17-rename_and_organize.sh)
@@ -321,6 +323,7 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 [20-final_gff_final_faa_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20-final_gff_final_faa_filter3.sh)
 
 [21-eggnog_mapper_filter3+skip4.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21-eggnog_mapper_filter3%2Bskip4.sh)
+
 
 [22.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/22.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh)
 
