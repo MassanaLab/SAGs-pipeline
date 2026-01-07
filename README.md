@@ -347,10 +347,3 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 [29.3-excluded.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.3-excluded.sh)
 
 [29.4-made_withs.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.4-made_withs.sh)
-
-In the last step, we just create the folders and copy there all the files that we consider to be the most important ones.
- 
-[16-build_leuven_filter3_folders.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16-build_leuven_filter3_folders.sh)
-
-
-
