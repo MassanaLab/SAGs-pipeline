@@ -9,9 +9,6 @@
 #SBATCH --error=data/logs/process_gtf_f3_%A_%a.err
 #SBATCH --array=1-2%2
 
-set -euo pipefail
-export LC_ALL=C
-
 W=coass_update
 
 # Base for filter3 build (override with: BASE=... sbatch ...)
