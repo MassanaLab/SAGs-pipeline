@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-export LC_ALL=C
-
 W=coass_update
 
 # Inputs (override via args if needed)
