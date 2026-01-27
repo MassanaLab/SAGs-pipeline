@@ -1,21 +1,17 @@
 #!/bin/bash
-# scripts/aleix_gff_process_big2/f1/1-build_ingredients_and_clean_headers.sh
-# Updated for "coass_update" inputs and project switch W
-set -euo pipefail
-export LC_ALL=C
 
-# ---- Project switch (set once and reuse) ----
-: "${W:=coass_update}"
+# Project
+W=coass_update
 
-# ---- Inputs (defaults depend on W; override via CLI if you want) ----
-ASM_BASE="${1:-lustre/${W}_filter1000}"               # e.g., lustre/coass_update_filter1000
-NEW_GTF="${2:-store/braker_${W}/gtf}"                 # e.g., store/braker_coass_update/gtf
-NEW_GFF3="${3:-store/braker_${W}/gff3}"               # e.g., store/braker_coass_update/gff3
+# Inputs
+ASM_BASE="lustre/${W}_filter1000"
+NEW_GTF="store/braker_${W}/gtf"
+NEW_GFF3="store/braker_${W}/gff3"
 
-# ---- Output base (uses W) ----
+# Output
 OUT_BASE="${4:-lustre/aleix_gff_process_big2_${W}}"
 
-# --- RESET OUTPUT BASE ---
+# Reset output
 if [[ -d "$OUT_BASE" ]]; then
   echo "🧹 Removing existing $OUT_BASE"
   rm -rf --one-file-system -- "$OUT_BASE"
@@ -33,13 +29,13 @@ MISS_G1="${OUT_BASE}/_missing_filter1_gtf.txt"
 mkdir -p "$ASM1" "$GTF1" "$ASM1C" "$GTF1C"
 : > "$SPEC1"; : > "$MISS_A1"; : > "$MISS_G1"
 
-# --- counters ---
+# Counters
 CNT_TOTAL=0
 CNT_OK=0
 CNT_MISS_ASM=0
 CNT_MISS_GTF=0
 CNT_GTF_BRAKER=0
-CNT_GTF_ASM=0   # (kept for compatibility; unlikely to be used now)
+CNT_GTF_ASM=0
 
 clean_fasta_to_node() {
   awk '(/^>/){hdr=$0; sub(/^>/,"",hdr); split(hdr,a,/[\t ]/); n=a[1]; p=index(n,"NODE_"); print ">" ((p>0)?substr(n,p):n); next} {print}' "$1" > "$2"
