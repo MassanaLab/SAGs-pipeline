@@ -19,11 +19,8 @@
 #   DEST_BASE=... (default: store/final_genomes_${W}_test)
 #   Sample list always comes from: data/clean/names_${W}.txt
 
-#set -euo pipefail
-export LC_ALL=C
-shopt -s nullglob
 
-W="${W:-coass_update}"
+W="coass_update"
 
 # Sample list
 NFILE="data/clean/names_${W}.txt"
@@ -68,9 +65,7 @@ miss_gff=0
 miss_gffp=0
 miss_og=0
 
-# ---------------------------------------------
-# MAIN LOOP — read samples line by line
-# ---------------------------------------------
+# Read samples line by line
 while IFS= read -r S; do
   # skip empty lines
   [[ -z "$S" ]] && continue
@@ -201,9 +196,8 @@ while IFS= read -r S; do
 
 done < "$NFILE"
 
-# ---------------------------------------------
-# FINAL REPORT
-# ---------------------------------------------
+
+# Final report
 echo
 echo "✅ Finished → $DEST_BASE"
 echo "Total samples:      $total"
