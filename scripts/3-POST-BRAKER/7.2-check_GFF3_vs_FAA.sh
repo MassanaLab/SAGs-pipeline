@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
+
 # check_faa_vs_processed.sh
 # Compare number of sequences in final_faa (*.faa) to rows-1 in processed outputs (*.txt)
 
 # check that GFF3 vs FAA have the same number of genes
-
-set -u  # don't use -e; we want to continue on errors
 
 W=coass_update
 
