@@ -23,8 +23,6 @@ mkdir -p ${DATA_OUT}
 
 cd ${DATA_OUT}
 
-#module load eggnog-mapper
-#source activate eggnog-mapper
 
 emapper.py -i ${AA}/${SAMPLE}_filter3_genes.faa -o ${SAMPLE}_eggnog --cpu 8
 
