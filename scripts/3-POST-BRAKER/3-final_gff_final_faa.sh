@@ -1,7 +1,4 @@
 #!/bin/bash
-# Copy post-filter (150plus) results into final_faa/ and final_gff3/,
-# renaming to SAMPLE_filter{1,3}_genes.faa and SAMPLE_filter{1,3}.gff3.
-# No subfolders; reset destinations each run.
 
 set -uo pipefail
 export LC_ALL=C
