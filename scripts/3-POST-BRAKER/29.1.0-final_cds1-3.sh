@@ -14,10 +14,6 @@
 #   OVERWRITE=1     # overwrite existing destination files (else skip)
 #   FALLBACK=1      # if 150plus missing, pick numerically largest *plus
 
-set -euo pipefail
-export LC_ALL=C
-shopt -s nullglob
-
 W=coass_ICM0002
 
 BASE1="${1:-lustre/aleix_gff_process_big2_${W}}"
