@@ -1,13 +1,8 @@
 #!/usr/bin/env bash
-# scripts/report_filter_counts.sh
-# Usage: bash scripts/report_filter_counts.sh full_remake
-# Env overrides: NAMES_FILE=... FC_DIR=...
 
-set -euo pipefail
-
-W="${1:-coass_update}"
-NAMES_FILE="${NAMES_FILE:-data/clean/names_${W}.txt}"
-FC_DIR="${FC_DIR:-lustre/filters_clean_${W}}"
+W="coass_update"
+NAMES_FILE="data/clean/names_${W}.txt"
+FC_DIR="lustre/filters_clean_${W}"
 
 REPORT_TSV="${FC_DIR}/filter_counts_report.tsv"
 REPORT_PRETTY="${FC_DIR}/filter_counts_report_pretty.txt"
