@@ -13,7 +13,7 @@ W=coass_update #!!!!
 
 SAMPLE=$(cat data/clean/names_${W}.txt | awk "NR == ${SLURM_ARRAY_TASK_ID}") # 2 #!!!!
 
-N=3 #!!!!
+N=3 #!!!! put 1 or 2 or 3
 
 INPUT=lustre/filters_clean_${W}/filter${N}/${SAMPLE}_filter${N}_clean.fasta #!!!!
 
@@ -63,18 +63,8 @@ busco \
 ################## CLEANNING #####################
 ##################################################
 
-#mkdir -p lustre/qbt_${W}_filter${N}_ess/quast
-#mkdir -p lustre/qbt_${W}_filter${N}_ess/busco
-
-#cp -r lustre/qbt_${W}_filter${N}/tiara/ lustre/qbt_${W}_filter${N}_ess
-
-#cp lustre/qbt_${W}_filter${N}/quast/${SAMPLE}/transposed_report.tsv lustre/qbt_${W}_filter${N}_ess/quast/${SAMPLE}_transposed_report.tsv
-
-#cp lustre/qbt_${W}_filter${N}/busco/${SAMPLE}/short_summary.specific.eukaryota_odb10.${SAMPLE}.txt lustre/qbt_${W}_filter${N}_ess/busco/
-
 #####################################
 # Cleaning (per-sample) — append results into qbt_${W}_ess
-# This avoids rm -r and race conditions across array tasks.
 #####################################
 
 OUT_ESS=lustre/qbt_${W}_filter${N}_ess
