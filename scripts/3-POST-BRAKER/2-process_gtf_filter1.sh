@@ -15,7 +15,7 @@ export LC_ALL=C
 W=coass_update
 
 # Point to your current BASE (you can override via: BASE=... sbatch ...)
-BASE="${BASE:-lustre/aleix_gff_process_big2_${W}}"
+BASE="lustre/aleix_gff_process_big2_${W}"
 mkdir -p "${BASE}/logs"
 
 SPEC1="${BASE}/species1.txt"
@@ -27,13 +27,13 @@ SPECIES="$(awk "NR==${SLURM_ARRAY_TASK_ID}" "$SPEC1" | tr -d '\r')"
 
 echo "=== ${SPECIES} (filter1 only) ==="
 
-# ---- Conda env (AGAT) ----
+# Conda enviroment (AGAT)
 module load cesga/system miniconda3/22.11.1-1
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate agat
 command -v agat_sp_keep_longest_isoform.pl >/dev/null || { echo "AGAT not found in env"; exit 3; }
 
-# --- process filter1 for this SPECIES ---
+# Process filter1 for this SPECIES
 process_filter1 () {
   local ASM_DIR_CLEAN="${BASE}/assemblies1_clean"
   local ASM_DIR_RAW="${BASE}/assemblies1"
