@@ -9,9 +9,6 @@
 #SBATCH --error=data/logs/process_gtf_f1_%A_%a.err
 #SBATCH --array=1-2%2
 
-set -euo pipefail
-export LC_ALL=C
-
 W=coass_update
 
 # Point to your current BASE (you can override via: BASE=... sbatch ...)
