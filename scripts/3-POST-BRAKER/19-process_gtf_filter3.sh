@@ -11,26 +11,26 @@
 
 W=coass_update
 
-# Base for filter3 build (override with: BASE=... sbatch ...)
-BASE="${BASE:-lustre/aleix_gff_process_big2_${W}_filter3}"
+# Base for filter3
+BASE="lustre/aleix_gff_process_big2_${W}_filter3"
 mkdir -p "${BASE}/logs"
 
 SPEC3="${BASE}/species3.txt"
 [[ -f "$SPEC3" ]] || { echo "No species list found: $SPEC3"; exit 1; }
 
-# Map array index -> species from species3.txt
+# Map array index to species from species3.txt
 SPECIES="$(awk "NR==${SLURM_ARRAY_TASK_ID}" "$SPEC3" | tr -d '\r')"
 [[ -n "${SPECIES:-}" ]] || { echo "No species at index ${SLURM_ARRAY_TASK_ID} in species3.txt"; exit 0; }
 
 echo "=== ${SPECIES} (filter3 only) ==="
 
-# ---- Conda env (AGAT) ----
+# Conda enviroment
 module load cesga/system miniconda3/22.11.1-1
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate agat
 command -v agat_sp_keep_longest_isoform.pl >/dev/null || { echo "AGAT not found in env"; exit 3; }
 
-# --- process filter3 for this SPECIES ---
+# Process filter3 for this SPECIES
 process_filter3 () {
   local ASM_DIR_CLEAN="${BASE}/assemblies3_clean"
   local ASM_DIR_RAW="${BASE}/assemblies3"
