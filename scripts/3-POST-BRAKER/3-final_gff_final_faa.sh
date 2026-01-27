@@ -1,8 +1,5 @@
 #!/bin/bash
 
-set -uo pipefail
-export LC_ALL=C
-
 W=coass_update
 
 BASE="${1:-lustre/aleix_gff_process_big2_${W}}"
