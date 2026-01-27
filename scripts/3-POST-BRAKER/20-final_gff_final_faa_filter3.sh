@@ -10,7 +10,7 @@ LIST="${BASE}/species3.txt"
 DEST_FAA="${BASE}/final_faa"
 DEST_GFF3="${BASE}/final_gff3"
 
-# --- reset destinations ---
+# Reset destinations ---
 rm -rf -- "$DEST_FAA" "$DEST_GFF3"
 mkdir -p "$DEST_FAA" "$DEST_GFF3"
 
