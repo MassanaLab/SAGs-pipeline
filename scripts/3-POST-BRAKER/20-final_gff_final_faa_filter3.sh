@@ -1,14 +1,10 @@
 #!/bin/bash
 # Copy post-filter (150plus) results into final_faa/ and final_gff3/,
 # renaming to SAMPLE_filter{1,3}_genes.faa and SAMPLE_filter{1,3}.gff3.
-# No subfolders; reset destinations each run.
-
-set -uo pipefail
-export LC_ALL=C
 
 W=coass_update
 
-BASE="${1:-lustre/aleix_gff_process_big2_${W}_filter3}"
+BASE="lustre/aleix_gff_process_big2_${W}_filter3"
 LIST="${BASE}/species3.txt"
 
 DEST_FAA="${BASE}/final_faa"
