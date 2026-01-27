@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
-export LC_ALL=C
-shopt -s nullglob
 
-###############################################################################
-# CONFIG (your keyword)
-###############################################################################
 W="coass_ICM0002"
 NAMES_FILE="data/clean/names_${W}.txt"
 
