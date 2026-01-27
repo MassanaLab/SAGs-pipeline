@@ -2,7 +2,7 @@
 
 N=$1
 
-W=coass_update
+W=coass_last
 
 OUT="${HOME}/lustre/qbt_${W}_filter${N}_ess/all_reports${N}"
 
