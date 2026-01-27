@@ -24,7 +24,7 @@ NEW_TIARA_FILE=~/lustre/new_tiara_${W}/${SAMPLE}_new_tiara.txt
 FLON_FILE=~/lustre/flon_${W}/${SAMPLE}_filter_lo_names.txt
 
 
-# ¡¡CAREFUL!!, esto de abajo dejarlo como está, a R le gusta así, no hacer variable ${OUT} ni nada
+# ¡¡CAREFUL!! dont touch anything here:
 
 mkdir -p ~/lustre/tables_filter_${W}
 
