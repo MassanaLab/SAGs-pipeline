@@ -17,11 +17,7 @@
 #   DEST_BASE=...             (default: store/final_genomes_${W}_test)
 #   The sample list ALWAYS comes from: data/clean/names_${W}.txt
 
-#set -euo pipefail
-export LC_ALL=C
-shopt -s nullglob
-
-W="${W:-coass_update}"
+W="coass_update"
 
 # Sample list
 NFILE="data/clean/names_${W}.txt"
