@@ -15,11 +15,8 @@
 #   PFAM_DIR=lustre/interproscan_temp_pfam_only
 #   DEST_BASE=store/final_genomes_${W}
 
-#set -euo pipefail
-export LC_ALL=C
-shopt -s nullglob
 
-W="${W:-coass_update}"
+W="coass_update"
 
 IN_DIR="${IN_DIR:-lustre/interproscan_temp}"
 PFAM_DIR="${PFAM_DIR:-lustre/interproscan_temp_pfam_only}"
