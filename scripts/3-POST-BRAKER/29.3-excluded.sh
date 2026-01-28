@@ -7,13 +7,9 @@
 #   - Find contigs present in f1 but not in f3
 #   - Write them to SAMPLE_excluded.fasta
 
-#set -euo pipefail
-export LC_ALL=C
-shopt -s nullglob
-
 module load seqkit
 
-W="${W:-coass_update}"
+W="coass_update"
 BASE="store/final_genomes_${W}_test"
 
 made=0       # excluded FASTAs with sequences
