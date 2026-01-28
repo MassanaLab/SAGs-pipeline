@@ -16,8 +16,8 @@
 
 W=coass_ICM0002
 
-BASE1="${1:-lustre/aleix_gff_process_big2_${W}}"
-BASE3="${2:-lustre/aleix_gff_process_big2_${W}_filter3}"
+BASE1="lustre/aleix_gff_process_big2_${W}"
+BASE3="lustre/aleix_gff_process_big2_${W}_filter3"
 
 # choose copy behavior
 _do_cp() {
