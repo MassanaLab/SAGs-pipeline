@@ -158,6 +158,10 @@ Notice how the script starts with `N=10`. That's the iteration number. Due to th
 
 [ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/2-BRAKER/ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh)
 
+After you have braker results. I use this script to organize the outputs:
+
+[rename_and_organize.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/2-BRAKER/rename_and_organize.sh)
+
 ## 6. BRAKER Gene Predictions Processing
 
 After running BRAKER to predict genes on each SAG assembly, we applied a three-step post-processing pipeline to clean headers, standardize annotation files, filter gene models, and generate the final curated FAA and GFF3 outputs.
