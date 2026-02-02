@@ -158,7 +158,7 @@ Notice how the script starts with `N=10`. That's the iteration number. Due to th
 
 [ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/2-BRAKER/ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh)
 
-After you have braker results. I use this script to organize the outputs:
+After you have braker results, use this script to organize the outputs:
 
 [rename_and_organize.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/2-BRAKER/rename_and_organize.sh)
 
