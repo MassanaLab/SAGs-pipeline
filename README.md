@@ -326,6 +326,14 @@ Here we repeat the same process applied on filter1 genomes, but now with filter3
 
 [20-final_gff_final_faa_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20-final_gff_final_faa_filter3.sh)
 
+[20.1-use_Extract_gff_info_out_Braker.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20.1-use_Extract_gff_info_out_Braker.sh)
+
+[20.2-parsing_extract_regions_output2.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20.2-parsing_extract_regions_output2.sh)
+
+[20.3-extract_percentages.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20.3-extract_percentages.R)
+
+
+
 [21-eggnog_mapper_filter3+skip4.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21-eggnog_mapper_filter3%2Bskip4.sh)
 
 
