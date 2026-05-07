@@ -13,7 +13,7 @@ module load cesga/2020  gcccore/system eggnog-mapper/2.1.10
 
 W=coass_juliol
 
-AA=~/store/braker_${W}/aa
+AA=~/mnt/smart/scratch/emm2/............../aleix_gff_process_big2_${W}/final_faa
 
 SAMPLE=$(cat data/clean/names_${W}.txt | awk "NR == ${SLURM_ARRAY_TASK_ID}") # 3
 
