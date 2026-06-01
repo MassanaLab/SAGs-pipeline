@@ -230,11 +230,11 @@ Then, using this script from @aleixop we will clean up the `.gtf` files from **B
 
 The cleaning of the `.gtf` files is essentially choosing one transcript per gene. Notice how in `.gtf` files we can have more than one transcript for each gene (they are named as _.t1_, _.t2_, _.t3_...) and it becomes really annoying, so with this script we are just keepping longest transcript to make this easier.
 
-[7.1-GFF_use_ALEIX_get_prediction_stats.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/3-use_ALEIX_get_prediction_stats.sh)
+[7.1-GFF_use_ALEIX_get_prediction_stats.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/7.1-GFF_use_ALEIX_get_prediction_stats.sh)
 
 Then we can check if gene counts are consistent between files and everything went according to plan. It justs compares how many protein sequences there are in the FASTA file (\*_filter1_genes.faa) and how many gene rows there are in the corresponding processed table (\*_gff_processed.txt (lines minus the header)).
 
-[ALEIX_get_prediction_stats.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/ALEIX_get_prediction_stats.R)
+[ALEIX_get_prediction_stats.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/scripts/3-POST-BRAKER/Rscripts/ALEIX_get_prediction_stats_v2.R)
 
 [7.2-check_GFF3_vs_FAA.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/7.2-check_GFF3_vs_FAA.sh)
 
