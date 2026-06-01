@@ -298,7 +298,7 @@ Notice the `N=x` variable. Indicate there to which filter (1, 2, or 3) you want 
 
 **2. Generate reports**
 
-[14-QBT_report.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/14-QBT_report.sh)
+[14-QBT_report.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/14-new_QBT_report.sh)
 
 **3. Summarize filtered QBT results**
 
@@ -310,7 +310,7 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 
 *on hpc cluster*
 
-[15-make_QBT_summary_filters.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/15-make_QBT_summary_filters.R)
+[15-make_QBT_summary_filters.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/15-new_make_QBT_summary_filters.R)
 
 ## POST FILTER 3
 
@@ -332,10 +332,7 @@ Here we repeat the same process applied on filter1 genomes, but now with filter3
 
 [20.3-extract_percentages.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20.3-extract_percentages.R)
 
-
-
 [21-eggnog_mapper_filter3+skip4.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21-eggnog_mapper_filter3%2Bskip4.sh)
-
 
 [22.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/22.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh)
 
@@ -352,6 +349,8 @@ Here we repeat the same process applied on filter1 genomes, but now with filter3
 [27-quast_only_summary.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/27-quast_only_summary.R)
 
 [28-replace_0Mb_col.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/28-replace_0Mb_col.sh)
+
+[29.1.0-final_cds1-3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.1.0-final_cds1-3.sh)
 
 [29.1.1-filter1_initial.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.1.1-filter1_initial.sh)
 
