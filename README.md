@@ -324,48 +324,48 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 
 Here we repeat the same process applied on filter1 genomes, but now with filter3 genomes.
 
-[16-braker3_post_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16-braker3_post_filter3.sh)
+[17-braker3_post_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/17-braker3_post_filter3.sh)
 
-[17-rename_and_organize.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/17-rename_and_organize.sh)
+[18-rename_and_organize.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/18-rename_and_organize.sh)
 
-[18-build_ingredients_and_clean_headers_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/18-build_ingredients_and_clean_headers_filter3.sh)
+[19-build_ingredients_and_clean_headers_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/19-build_ingredients_and_clean_headers_filter3.sh)
 
-[19-process_gtf_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/19-process_gtf_filter3.sh)
+[20-process_gtf_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20-process_gtf_filter3.sh)
 
-[20-final_gff_final_faa_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20-final_gff_final_faa_filter3.sh)
+[21-final_gff_final_faa_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21-final_gff_final_faa_filter3.sh)
 
-[20.1-use_Extract_gff_info_out_Braker.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20.1-use_Extract_gff_info_out_Braker.sh)
+[21.1-use_Extract_gff_info_out_Braker.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21.1-use_Extract_gff_info_out_Braker.sh)
 
-[20.2-parsing_extract_regions_output2.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20.2-parsing_extract_regions_output2.sh)
+[21.2-parsing_extract_regions_output2.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21.2-parsing_extract_regions_output2.sh)
 
-[20.3-extract_percentages.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20.3-extract_percentages.R)
+[21.3-extract_percentages.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21.3-extract_percentages.R)
 
-[21-eggnog_mapper_filter3+skip4.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21-eggnog_mapper_filter3%2Bskip4.sh)
+[22-eggnog_mapper_filter3+skip4.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21-eggnog_mapper_filter3%2Bskip4.sh)
 
-[22.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/22.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh)
+[23.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/23.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh)
 
-[22.2-check_GFF3_vs_FAA_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/22.2-check_GFF3_vs_FAA_filter3.sh)
+[23.2-check_GFF3_vs_FAA_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/23.2-check_GFF3_vs_FAA_filter3.sh)
 
-[23-genes_filter50_100_200.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/23-genes_filter50_100_200.sh)
+[24-genes_filter50_100_200.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/24-genes_filter50_100_200.sh)
 
-[24-gene_count50_100_200.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/24-gene_count50_100_200.sh)
+[25-gene_count50_100_200.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/25-gene_count50_100_200.sh)
 
-[25-og_QUAST+cleanning.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/25-og_QUAST%2Bcleanning.sh)
+[26-og_QUAST+cleanning.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/25-og_QUAST%2Bcleanning.sh)
 
-[26-og_new_QUAST_report.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/26-og_new_QUAST_report.sh)
+[27-og_new_QUAST_report.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/27-og_new_QUAST_report.sh)
 
-[27-quast_only_summary.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/27-quast_only_summary.R)
+[28-quast_only_summary.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/28-quast_only_summary.R)
 
-[28-replace_0Mb_col.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/28-replace_0Mb_col.sh)
+[29-replace_0Mb_col.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29-replace_0Mb_col.sh)
 
-[29.1.0-final_cds1-3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.1.0-final_cds1-3.sh)
+[30.1.0-final_cds1-3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/30.1.0-final_cds1-3.sh)
 
-[29.1.1-filter1_initial.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.1.1-filter1_initial.sh)
+[30.1.1-filter1_initial.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/30.1.1-filter1_initial.sh)
 
-[29.1.2-filter3_initial.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.1.2-filter3_initial.sh)
+[30.1.2-filter3_initial.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/30.1.2-filter3_initial.sh)
 
-[29.2-interproscans.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.2-interproscans.sh)
+[30.2-interproscans.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/30.2-interproscans.sh)
 
-[29.3-excluded.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.3-excluded.sh)
+[30.3-excluded.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/30.3-excluded.sh)
 
-[29.4-made_withs.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29.4-made_withs.sh)
+[30.4-made_withs.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/30.4-made_withs.sh)
