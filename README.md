@@ -302,15 +302,23 @@ Notice the `N=x` variable. Indicate there to which filter (1, 2, or 3) you want 
 
 **3. Summarize filtered QBT results**
 
-*on your computer*
+*on your computer:*
 
 Move the 3 `all_repotsx` files to a folder in your computer and execute this script in R:
 
 [QBT_LEUVEN_summary_final_filters.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/QBT_LEUVEN_summary_final_filters.R)
 
-*on hpc cluster*
+*on hpc cluster:*
 
 [15-make_QBT_summary_filters.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/15-new_make_QBT_summary_filters.R)
+
+#### 8.3.2 BUSCO with predicted genes (proteins)
+
+[16.1-busco_genes_f3+cleanning.sh]()
+
+[16.2-busco_genes_report.sh]()
+
+[16.3-make_BUSCO_prot.R]()
 
 ## POST FILTER 3
 
