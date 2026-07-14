@@ -314,11 +314,11 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 
 #### 8.3.2 BUSCO with predicted genes (proteins)
 
-[16.1-busco_genes_f3+cleanning.sh]()
+[16.1-busco_genes_f3+cleanning.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16.1-busco_genes_f3+cleanning.sh)
 
-[16.2-busco_genes_report.sh]()
+[16.2-busco_genes_report.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16.2-busco_genes_report.sh)
 
-[16.3-make_BUSCO_prot.R]()
+[16.3-make_BUSCO_prot.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16.3-make_BUSCO_prot.R)
 
 ## POST FILTER 3
 
