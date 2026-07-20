@@ -1,37 +1,26 @@
 #!/bin/bash
 
-#SBATCH --job-name=process_gtf_50aa_f3_only
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=6
-#SBATCH --mem=12G
-#SBATCH --time=00:30:00
-#SBATCH --output=data/logs/process_gtf_f3_%A_%a.out
-#SBATCH --error=data/logs/process_gtf_f3_%A_%a.err
-#SBATCH --array=1-2%2
+set -u
 
-W=coass_update
+W=coass_guigo
 
-# Base for filter3
-BASE="lustre/aleix_gff_process_big2_${W}_filter3"
+# Base for filter3 build (override with: BASE=... bash script.sh)
+BASE="${BASE:-lustre/aleix_gff_process_big2_${W}_filter3}"
 mkdir -p "${BASE}/logs"
 
-SPEC3="${BASE}/species3.txt"
+# Default species file is ./x (override with: SPEC3=... bash script.sh)
+SPEC3="${SPEC3:-${BASE}/species3.txt}"
 [[ -f "$SPEC3" ]] || { echo "No species list found: $SPEC3"; exit 1; }
 
-# Map array index to species from species3.txt
-SPECIES="$(awk "NR==${SLURM_ARRAY_TASK_ID}" "$SPEC3" | tr -d '\r')"
-[[ -n "${SPECIES:-}" ]] || { echo "No species at index ${SLURM_ARRAY_TASK_ID} in species3.txt"; exit 0; }
-
-echo "=== ${SPECIES} (filter3 only) ==="
-
-# Conda enviroment
+# ---- Conda env (AGAT) ----
 module load cesga/system miniconda3/22.11.1-1
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate agat
 command -v agat_sp_keep_longest_isoform.pl >/dev/null || { echo "AGAT not found in env"; exit 3; }
 
-# Process filter3 for this SPECIES
 process_filter3 () {
+  local SPECIES="$1"
+
   local ASM_DIR_CLEAN="${BASE}/assemblies3_clean"
   local ASM_DIR_RAW="${BASE}/assemblies3"
   local GTF_DIR_CLEAN="${BASE}/gtf3_clean"
@@ -57,16 +46,18 @@ process_filter3 () {
 
   # Optional reset for this species (export RESET_RESULTS=1 to wipe previous)
   if [[ "${RESET_RESULTS:-0}" == "1" && -d "$OUT_DIR" ]]; then
+    local SAFE_BASE OUT_REAL
     SAFE_BASE="$(realpath "${OUT_ROOT}")"
     OUT_REAL="$(realpath "$OUT_DIR")"
     case "$OUT_REAL" in
       "$SAFE_BASE"/*) echo "🔁 Resetting outputs: rm -rf \"$OUT_DIR\""; rm -rf -- "$OUT_DIR" ;;
-      *) echo "❌ Refusing to delete unexpected path: $OUT_DIR"; exit 2 ;;
+      *) echo "❌ Refusing to delete unexpected path: $OUT_DIR"; return 2 ;;
     esac
   fi
 
   mkdir -p "$OUT_DIR"
 
+  echo "=== ${SPECIES} (filter3 only) ==="
   echo "--- filter3 ---"
   echo "Assembly : ${ASSEMBLY}"
   echo "GTF in   : ${GTF_IN}"
@@ -92,6 +83,7 @@ process_filter3 () {
   local FILT_CONTIGS="${OUT_DIR}/filt_gff3.contigs"
   grep -v '^#' "${GTF_IN}"        | cut -f1 | sort -u > "${GTF_CONTIGS}"
   grep -v '^#' "${FILTERED_GFF3}" | cut -f1 | sort -u > "${FILT_CONTIGS}"
+
   local MISSING_IN_ORIG
   MISSING_IN_ORIG=$(comm -23 "${FILT_CONTIGS}" "${GTF_CONTIGS}" || true)
   if [[ -n "${MISSING_IN_ORIG}" ]]; then
@@ -105,6 +97,7 @@ process_filter3 () {
   # 4b) Filtered contigs must exist in ASSEMBLY
   local ASM_CONTIGS="${OUT_DIR}/assembly.contigs"
   grep '^>' "${ASSEMBLY}" | sed 's/^>//; s/[ \t].*$//' | sort -u > "${ASM_CONTIGS}"
+
   local MISSING_IN_ASM
   MISSING_IN_ASM=$(comm -23 "${FILT_CONTIGS}" "${ASM_CONTIGS}" || true)
   if [[ -n "${MISSING_IN_ASM}" ]]; then
@@ -137,6 +130,76 @@ process_filter3 () {
   echo "✔ Done ${SPECIES} (filter3)"
 }
 
-process_filter3 || echo "⚠️  filter3 finished with warnings/errors for ${SPECIES}"
+run_species_by_name () {
+  local SPECIES="$1"
+  [[ -z "$SPECIES" ]] && return 0
+  process_filter3 "$SPECIES" || echo "⚠️  filter3 finished with warnings/errors for ${SPECIES}"
+}
+
+run_species_by_line () {
+  local LINE_NO="$1"
+  local SPECIES
+  SPECIES="$(sed -n "${LINE_NO}p" "$SPEC3" | tr -d '\r')"
+
+  if [[ -z "${SPECIES}" ]]; then
+    echo "⚠️  No species at line ${LINE_NO} in ${SPEC3}. Skipping."
+    return 0
+  fi
+
+  run_species_by_name "$SPECIES"
+}
+
+# -----------------------------
+# Command-line behavior
+# -----------------------------
+#
+# No arguments:
+#   run all species in x
+#
+# Numeric arguments:
+#   treat them as line numbers in x
+#   example: bash script.sh 29 42 45 46
+#
+# --species NAME [NAME2 ...]:
+#   run specific species names directly
+#   example: bash script.sh --species ICM0065_COSAG.1_Prymnesiophyceae
+#
+
+if [[ $# -eq 0 ]]; then
+  while IFS= read -r SPECIES || [[ -n "$SPECIES" ]]; do
+    SPECIES="$(printf '%s' "$SPECIES" | tr -d '\r')"
+    [[ -z "$SPECIES" ]] && continue
+    run_species_by_name "$SPECIES"
+  done < "$SPEC3"
+
+elif [[ "$1" == "--species" ]]; then
+  shift
+  if [[ $# -eq 0 ]]; then
+    echo "Usage:"
+    echo "  bash $0                  # run all species from x"
+    echo "  bash $0 29 42 45 46      # run selected line numbers from x"
+    echo "  bash $0 --species NAME   # run one or more species names directly"
+    conda deactivate
+    exit 1
+  fi
+
+  for SPECIES in "$@"; do
+    run_species_by_name "$SPECIES"
+  done
+
+else
+  for ARG in "$@"; do
+    if [[ "$ARG" =~ ^[0-9]+$ ]]; then
+      run_species_by_line "$ARG"
+    else
+      echo "⚠️  Argument '$ARG' is not a number."
+      echo "Use either:"
+      echo "  bash $0                  # run all species from x"
+      echo "  bash $0 29 42 45 46      # run selected line numbers from x"
+      echo "  bash $0 --species NAME   # run species names directly"
+    fi
+  done
+fi
+
 conda deactivate
-echo "✔ All done for ${SPECIES} (filter3 only)"
+echo "✔ All done"
