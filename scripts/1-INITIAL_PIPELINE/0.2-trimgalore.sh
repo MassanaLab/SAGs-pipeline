@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 #SBATCH --account=emm2
 #SBATCH --job-name=trimgalore
