@@ -274,6 +274,10 @@ The following script will also perform 3 filters:
 
 [10-use_kaiju_process_FUNCTIONS_ARG.sh](scripts/3-POST-BRAKER/10-use_kaiju_process_FUNCTIONS_ARG.sh)
 
+Do it locally, probably faster:
+
+[10-use_kaiju_process_FUNCTIONS_ARG_local.sh](scripts/3-POST-BRAKER/10-use_kaiju_process_FUNCTIONS_ARG_local.sh)
+
 [kaiju_process_FUNCTIONS_ARG_old_pipe.R](scripts/3-POST-BRAKER/Rscripts/kaiju_process_FUNCTIONS_ARG_old_pipe.R)
 
 #### 8.2.2 Select scaffolds to keep after the 3 filtering
