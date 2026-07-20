@@ -34,7 +34,7 @@ GC1003827_B08
 
 Checks general statistics of raw files.
 
-[0.1-seqkit_stats.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/0.1-seqkit_stats.sh)
+[0.1-seqkit_stats.sh](scripts/1-INITIAL_PIPELINE/0.1-seqkit_stats.sh)
 
 
 ### 1.2 Trim Galore: Adapter removal and read trimming according to quality
@@ -46,20 +46,20 @@ Uses Cutadapt for the actual trimming process, ensuring flexibility and reliabil
 
 `--length` sets the minimum length for retaining reads after trimming. In our case, we put 75.
 
-[0.2-trimgalore.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/0.2-trimgalore.sh)
+[0.2-trimgalore.sh](scripts/1-INITIAL_PIPELINE/0.2-trimgalore.sh)
 
 
 ### 1.3 Seqkit: Post-Trimming Quality Check
 
 Just repeat SeqKit but now for the trimmed reads. Check that the trimming has been properly done.
 
-[0.3-seqkit_stats_clean.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/0.3-seqkit_stats_clean.sh)
+[0.3-seqkit_stats_clean.sh](scripts/1-INITIAL_PIPELINE/0.3-seqkit_stats_clean.sh)
 
 ### 1.4 Merging sequencing replicates (if needed)
 
 In the case of having several sequencing repetitions for each SAG, we need to concatenate all reads that should go together.
 
-[0.5-concatenate.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/0.5-concatenate.sh)
+[0.5-concatenate.sh](scripts/1-INITIAL_PIPELINE/0.5-concatenate.sh)
 
 ## 2. Taxonomic Assignment Using mTags (18S-V4 Region)
 
@@ -67,7 +67,7 @@ Check the general taxonomy of your reads using 18S-V4 fragments (mTags).
 
 ### 2.1 BLAST-based extraction of 18S-V4 fragments
 
-[1.1-extraction_blast.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/1.1-extraction_blast.sh)
+[1.1-extraction_blast.sh](scripts/1-INITIAL_PIPELINE/1.1-extraction_blast.sh)
 
 Performs a basic BLAST of your reads against the eukaryotesV4 blast database. Generates mTags, which show the specific sequence of the hits.
 
@@ -80,7 +80,7 @@ Result:
 
 ### 2.2 mTag classification and OTU table generation
 
-[1.2-mtags_classification.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/1.2-mtags_classification.sh)
+[1.2-mtags_classification.sh](scripts/1-INITIAL_PIPELINE/1.2-mtags_classification.sh)
 
 Generates OTU table. Some additional R scripts are needed to clean and sort the table so it becomes more readable and has a better format for later analyses. 
 
@@ -108,7 +108,7 @@ The resulting `.csv` file summarizes the OTU table using the following columns.
 
 ### 3.1 SPAdes
 
-[spades_127_sel252.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/1-INITIAL_PIPELINE/spades_127_sel252.sh)
+[spades_127_sel252.sh](scripts/1-INITIAL_PIPELINE/spades_127_sel252.sh)
 
 Unify forward and reverse sequences to obtain the whole genome.
 
@@ -148,19 +148,19 @@ wget  https://bioinf.uni-greifswald.de/bioinf/partitioned_odb11/Eukaryota.fa.gz
 
 Here is a general ideal script for **BRAKER**. Notice how in `cd $LUSTRE_SCRATCH` it's changing the directory to this `LUSTRE_SCRATCH` kinda limbo space and it will create a folder for each sample. Inside this folder is where all the files (lots of files) will be generated. In the end, if everything is finished well, the most important files (_.aa_, _.codingseq_, _.gtf_, _.log_) will be copied to folders in `lustre`, where they are accessible. 
 
-[braker_general.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/2-BRAKER/braker_general.sh)
+[braker_general.sh](scripts/2-BRAKER/braker_general.sh)
 
 However, it's really common for some samples to fail. In that case, we don't want **BRAKER** to write things in LUSTRE_SCRATCH because we want to be able to see what is going on. Here is a modified script just for those cases where we don't want to use `LUSTRE_SCRATCH`. It's nothing special, just a script where some lines are commented.
 
-[braker_redo.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/2-BRAKER/braker_redo.sh)
+[braker_redo.sh](scripts/2-BRAKER/braker_redo.sh)
 
 Notice how the script starts with `N=10`. That's the iteration number. Due to the failures, Aleix Obiol discovered a way to fix the problem. It essentially consists of finding the corrupted _nuc\*prot\*_ files inside the **Spaln** folder that **BRAKER** generates. This _nuc\*prot\*_ file has some numbers that are related to proteins inside the database. With the following script, we can remove those proteins that are being problematic and create a new database without them. So each new database will have its iteration number `N` to be used in the `braker_redo.sh` script.
 
-[ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/2-BRAKER/ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh)
+[ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh](scripts/2-BRAKER/ALEIX_BRAKER_Spaln_solution_seqkit_grep_remove.sh)
 
 After you have braker results, use this script to organize the outputs:
 
-[rename_and_organize.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/2-BRAKER/rename_and_organize.sh)
+[rename_and_organize.sh](scripts/2-BRAKER/rename_and_organize.sh)
 
 ## 6. BRAKER Gene Predictions Processing
 
@@ -168,15 +168,15 @@ After running BRAKER to predict genes on each SAG assembly, we applied a three-s
 
 The first step is to prepare a clean, standardized dataset for all SAGs before applying any filtering. This script ensures that every sample has a clean assembly and GTF with matching contig headers, which is essential before running gene-length filtering.
 
-[1-build_ingredients_and_clean_headers.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/1-build_ingredients_and_clean_headers.sh)
+[1-build_ingredients_and_clean_headers.sh](scripts/3-POST-BRAKER/1-build_ingredients_and_clean_headers.sh)
 
 Then we proceed with the processing of each gtf file. The following script produces high-confidence, longest-isoform, ≥50 aa gene sets for each sample.
 
-[2-process_gtf_filter1.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/2-process_gtf_filter1.sh)
+[2-process_gtf_filter1.sh](scripts/3-POST-BRAKER/2-process_gtf_filter1.sh)
 
 Finally, we collect all processed results and produce the final curated gene datasets.
 
-[3-final_gff_final_faa.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/3-final_gff_final_faa.sh)
+[3-final_gff_final_faa.sh](scripts/3-POST-BRAKER/3-final_gff_final_faa.sh)
 
 ## 7. Gene annotation
 
@@ -186,7 +186,7 @@ Here is the post-braker pipeline, specially designed and refined for the Leuven 
 
 Here we use EggNOG-mapper for functional annotation of genes. It uses its own database, which contains orthologous groups and functional annotations, to assign functions to sequences based on homology. 
 
-[4-eggnog_mapper+skip4.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/4-eggnog_mapper+skip4.sh)
+[4-eggnog_mapper+skip4.sh](scripts/3-POST-BRAKER/4-eggnog_mapper+skip4.sh)
 
 In this script, I create a singular file for each sample. It is inside this file where EggNOG-mapper will create 3 files:
 
@@ -205,7 +205,7 @@ To add more taxonomic information about each SAG we use Kaiju, which takes our g
 
 The script is simple, just provide the location of the genes from **BRAKER** and the location of the database.
 
-[5-kaiju_faa+grep_C.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/5-kaiju_faa+grep_C.sh)
+[5-kaiju_faa+grep_C.sh](scripts/3-POST-BRAKER/5-kaiju_faa+grep_C.sh)
 
 The script creates single files for each sample so Kaiju can write its 3 output files:
 
@@ -230,13 +230,13 @@ Then, using this script from @aleixop we will clean up the `.gtf` files from **B
 
 The cleaning of the `.gtf` files is essentially choosing one transcript per gene. Notice how in `.gtf` files we can have more than one transcript for each gene (they are named as _.t1_, _.t2_, _.t3_...) and it becomes really annoying, so with this script we are just keepping longest transcript to make this easier.
 
-[7.1-GFF_use_ALEIX_get_prediction_stats.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/7.1-GFF_use_ALEIX_get_prediction_stats.sh)
+[7.1-GFF_use_ALEIX_get_prediction_stats.sh](scripts/3-POST-BRAKER/7.1-GFF_use_ALEIX_get_prediction_stats.sh)
 
 Then we can check if gene counts are consistent between files and everything went according to plan. It justs compares how many protein sequences there are in the FASTA file (\*_filter1_genes.faa) and how many gene rows there are in the corresponding processed table (\*_gff_processed.txt (lines minus the header)).
 
-[ALEIX_get_prediction_stats.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/scripts/3-POST-BRAKER/Rscripts/ALEIX_get_prediction_stats_v2.R)
+[ALEIX_get_prediction_stats_v2.R](scripts/3-POST-BRAKER/Rscripts/ALEIX_get_prediction_stats_v2.R)
 
-[7.2-check_GFF3_vs_FAA.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/7.2-check_GFF3_vs_FAA.sh)
+[7.2-check_GFF3_vs_FAA.sh](scripts/3-POST-BRAKER/7.2-check_GFF3_vs_FAA.sh)
 
 
 
@@ -246,15 +246,15 @@ The last step in this block will be to merge together the results from the [**gt
 
 Again, very simple script: just make sure to input the `grep_C` Kaiju files from the previous step and the processed gtf files.
 
-[8-use_kaiju_process_TABLE1_FUNCTIONS_ARG.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/8-use_kaiju_process_TABLE1_FUNCTIONS_ARG.sh)
+[8-use_kaiju_process_TABLE1_FUNCTIONS_ARG.sh](scripts/3-POST-BRAKER/8-use_kaiju_process_TABLE1_FUNCTIONS_ARG.sh)
 
-[kaiju_process_TABLE1_FUNCTIONS_ARG.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/kaiju_process_TABLE1_FUNCTIONS_ARG.R)
+[kaiju_process_TABLE1_FUNCTIONS_ARG.R](scripts/3-POST-BRAKER/Rscripts/kaiju_process_TABLE1_FUNCTIONS_ARG.R)
 
 #### 8.1.3 Identify Tiara-only scaffolds without predictions
 
 The first step would be to find those scaffolds that have Tiara information but **BRAKER** was not able to predict any genes inside them. We are very sure of Tiara's results so we want to keep these scaffolds, it does not matter what **BRAKER** says.
 
-[9-process_leftovers_new_tiara_leuven.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/9-process_leftovers_new_tiara_leuven.sh)
+[9-process_leftovers_new_tiara_leuven.sh](scripts/3-POST-BRAKER/9-process_leftovers_new_tiara_leuven.sh)
 
 
 ### 8.2 Filtering genome assemblies
@@ -272,17 +272,17 @@ The following script will also perform 3 filters:
 3. Filter out scaffolds in the range of 1000-3000bp that have **any** hints (EggNOG & Kaiju instances) of being _eukaryotes_ and have **some** (more than 0) hints of being _prokaryotes_.
 
 
-[10-use_kaiju_process_FUNCTIONS_ARG.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/10-use_kaiju_process_FUNCTIONS_ARG.sh)
+[10-use_kaiju_process_FUNCTIONS_ARG.sh](scripts/3-POST-BRAKER/10-use_kaiju_process_FUNCTIONS_ARG.sh)
 
-[kaiju_process_FUNCTIONS_ARG_old_pipe.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/Rscripts/kaiju_process_FUNCTIONS_ARG_old_pipe.R)
+[kaiju_process_FUNCTIONS_ARG_old_pipe.R](scripts/3-POST-BRAKER/Rscripts/kaiju_process_FUNCTIONS_ARG_old_pipe.R)
 
 #### 8.2.2 Select scaffolds to keep after the 3 filtering
 
 Once we have our 3 filters, we can use `seqkit grep` to grab the names of the selected scaffolds to be kept.
 
-[11.1-seqkit_greps_leuven.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/11.1-seqkit_greps_leuven.sh)
+[11.1-seqkit_greps_leuven.sh](scripts/3-POST-BRAKER/11.1-seqkit_greps_leuven.sh)
 
-[11.2-quick_filters_report.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/11.2-quick_filters_report.sh)
+[11.2-quick_filters_report.sh](scripts/3-POST-BRAKER/11.2-quick_filters_report.sh)
 
 ### 8.3 Reporting clean assemblies
 
@@ -294,11 +294,11 @@ Then we can do a QBT analysis (explained before).
 
 Notice the `N=x` variable. Indicate there to which filter (1, 2, or 3) you want to do QBT.
 
-[12-QBT_filterx+cleanning.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/12-QBT_filterx+cleanning.sh)
+[12-QBT_filterx+cleanning.sh](scripts/3-POST-BRAKER/12-QBT_filterx+cleanning.sh)
 
 **2. Generate reports**
 
-[14-QBT_report.sh](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/14-new_QBT_report.sh)
+[14-new_QBT_report.sh](scripts/3-POST-BRAKER/14-new_QBT_report.sh)
 
 **3. Summarize filtered QBT results**
 
@@ -306,66 +306,66 @@ Notice the `N=x` variable. Indicate there to which filter (1, 2, or 3) you want 
 
 Move the 3 `all_repotsx` files to a folder in your computer and execute this script in R:
 
-[QBT_LEUVEN_summary_final_filters.R](https://github.com/gmafer/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/QBT_LEUVEN_summary_final_filters.R)
+[QBT_LEUVEN_summary_final_filters.R](scripts/3-POST-BRAKER/QBT_LEUVEN_summary_final_filters.R)
 
 *on hpc cluster:*
 
-[15-make_QBT_summary_filters.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/15-new_make_QBT_summary_filters.R)
+[15-new_[22-eggnog_mapper_filter3+skip4.sh](scripts/3-POST-BRAKER/21-eggnog_mapper_filter3%2Bskip4.sh)make_QBT_summary_filters.R](scripts/3-POST-BRAKER/15-new_make_QBT_summary_filters.R)
 
 #### 8.3.2 BUSCO with predicted genes (proteins)
 
-[16.1-busco_genes_f3+cleanning.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16.1-busco_genes_f3+cleanning.sh)
+[16.1-busco_genes_f3+cleanning.sh](scripts/3-POST-BRAKER/16.1-busco_genes_f3+cleanning.sh)
 
-[16.2-busco_genes_report.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16.2-busco_genes_report.sh)
+[16.2-busco_genes_report.sh](scripts/3-POST-BRAKER/16.2-busco_genes_report.sh)
 
-[16.3-make_BUSCO_prot.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/16.3-make_BUSCO_prot.R)
+[16.3-make_BUSCO_prot.R](scripts/3-POST-BRAKER/16.3-make_BUSCO_prot.R)
 
 ## POST FILTER 3
 
 Here we repeat the same process applied on filter1 genomes, but now with filter3 genomes.
 
-[17-braker3_post_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/17-braker3_post_filter3.sh)
+[17-braker3_post_filter3.sh](scripts/3-POST-BRAKER/17-braker3_post_filter3.sh)
 
-[18-rename_and_organize.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/18-rename_and_organize.sh)
+[18-rename_and_organize.sh](scripts/3-POST-BRAKER/18-rename_and_organize.sh)
 
-[19-build_ingredients_and_clean_headers_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/19-build_ingredients_and_clean_headers_filter3.sh)
+[19-build_ingredients_and_clean_headers_filter3.sh](scripts/3-POST-BRAKER/19-build_ingredients_and_clean_headers_filter3.sh)
 
-[20-process_gtf_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/20-process_gtf_filter3.sh)
+[20-process_gtf_filter3.sh](scripts/3-POST-BRAKER/20-process_gtf_filter3.sh)
 
-[21-final_gff_final_faa_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21-final_gff_final_faa_filter3.sh)
+[21-final_gff_final_faa_filter3.sh](scripts/3-POST-BRAKER/21-final_gff_final_faa_filter3.sh)
 
-[21.1-use_Extract_gff_info_out_Braker.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21.1-use_Extract_gff_info_out_Braker.sh)
+[21.1-use_Extract_gff_info_out_Braker.sh](scripts/3-POST-BRAKER/21.1-use_Extract_gff_info_out_Braker.sh)
 
-[21.2-parsing_extract_regions_output2.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21.2-parsing_extract_regions_output2.sh)
+[21.2-parsing_extract_regions_output2.sh](scripts/3-POST-BRAKER/21.2-parsing_extract_regions_output2.sh)
 
-[21.3-extract_percentages.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21.3-extract_percentages.R)
+[21.3-extract_percentages.R](scripts/3-POST-BRAKER/21.3-extract_percentages.R)
 
-[22-eggnog_mapper_filter3+skip4.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/21-eggnog_mapper_filter3%2Bskip4.sh)
+[22-eggnog_mapper_filter3+skip4.sh](scripts/3-POST-BRAKER/22-eggnog_mapper_filter3+skip4.sh)
 
-[23.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/23.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh)
+[23.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh](scripts/3-POST-BRAKER/23.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh)
 
-[23.2-check_GFF3_vs_FAA_filter3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/23.2-check_GFF3_vs_FAA_filter3.sh)
+[23.2-check_GFF3_vs_FAA_filter3.sh](scripts/3-POST-BRAKER/23.2-check_GFF3_vs_FAA_filter3.sh)
 
-[24-genes_filter50_100_200.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/24-genes_filter50_100_200.sh)
+[24-genes_filter50_100_200.sh](scripts/3-POST-BRAKER/24-genes_filter50_100_200.sh)
 
-[25-gene_count50_100_200.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/25-gene_count50_100_200.sh)
+[25-gene_count50_100_200.sh](scripts/3-POST-BRAKER/25-gene_count50_100_200.sh)
 
-[26-og_QUAST+cleanning.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/25-og_QUAST%2Bcleanning.sh)
+[26-og_QUAST+cleanning.sh](scripts/3-POST-BRAKER/26-og_QUAST+cleanning.sh)
 
-[27-og_new_QUAST_report.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/27-og_new_QUAST_report.sh)
+[27-og_new_QUAST_report.sh](scripts/3-POST-BRAKER/27-og_new_QUAST_report.sh)
 
-[28-quast_only_summary.R](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/28-quast_only_summary.R)
+[28-quast_only_summary.R](scripts/3-POST-BRAKER/28-quast_only_summary.R)
 
-[29-replace_0Mb_col.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/29-replace_0Mb_col.sh)
+[29-replace_0Mb_col.sh](scripts/3-POST-BRAKER/29-replace_0Mb_col.sh)
 
-[30.1.0-final_cds1-3.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/30.1.0-final_cds1-3.sh)
+[30.1.0-final_cds1-3.sh](scripts/3-POST-BRAKER/30.1.0-final_cds1-3.sh)
 
-[30.1.1-filter1_initial.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/30.1.1-filter1_initial.sh)
+[30.1.1-filter1_initial.sh](scripts/3-POST-BRAKER/30.1.1-filter1_initial.sh)
 
-[30.1.2-filter3_initial.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/30.1.2-filter3_initial.sh)
+[30.1.2-filter3_initial.sh](scripts/3-POST-BRAKER/30.1.2-filter3_initial.sh)
 
-[30.2-interproscans.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/30.2-interproscans.sh)
+[30.2-interproscans.sh](scripts/3-POST-BRAKER/30.2-interproscans.sh)
 
-[30.3-excluded.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/30.3-excluded.sh)
+[30.3-excluded.sh](scripts/3-POST-BRAKER/30.3-excluded.sh)
 
-[30.4-made_withs.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/scripts/3-POST-BRAKER/30.4-made_withs.sh)
+[30.4-made_withs.sh](scripts/3-POST-BRAKER/30.4-made_withs.sh)
