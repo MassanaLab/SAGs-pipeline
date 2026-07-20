@@ -9,7 +9,7 @@ NEW_GTF="store/braker_${W}/gtf"
 NEW_GFF3="store/braker_${W}/gff3"
 
 # Output
-OUT_BASE="${4:-lustre/aleix_gff_process_big2_${W}}"
+OUT_BASE="lustre/aleix_gff_process_big2_${W}"
 
 # Reset output
 if [[ -d "$OUT_BASE" ]]; then
