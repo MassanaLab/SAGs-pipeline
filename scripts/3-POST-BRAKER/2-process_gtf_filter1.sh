@@ -11,7 +11,6 @@
 
 W=coass_update
 
-# Point to your current BASE (you can override via: BASE=... sbatch ...)
 BASE="lustre/aleix_gff_process_big2_${W}"
 mkdir -p "${BASE}/logs"
 
