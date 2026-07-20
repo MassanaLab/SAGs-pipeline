@@ -133,7 +133,7 @@ All information on how to run QBT [here](https://github.com/MassanaLab/QBT-pipel
 1. Download GeneMark license (GeneMark-ES/ET/EP+ ver 4.72_lic): http://topaz.gatech.edu/GeneMark/license_download.cgi
 2. Send it to your cluster `home` directory via `scp`.
 3. Do `gunzip`.
-4. Rename it to to .gm_key.
+4. Rename it to .gm_key.
 
 ```
 mv <license file> .gm_key
@@ -196,7 +196,7 @@ In this script, I create a singular file for each sample. It is inside this file
 
 -*.seed_orthologs
 
-All 3 files are interesting but in our case, we only focus on the `.anotations` one. If you open it with Excel you will see a big file with lots of data. Don't worry, in the following steps, we will be cleaning and selecting only those rows that are useful to us. But since the first 5 lines on the `.anotations` file are very annoying, we start by removing them and putting all clean eggnog files in the same folder.
+All 3 files are interesting but in our case, we only focus on the `.annotations` one. If you open it with Excel you will see a big file with lots of data. Don't worry, in the following steps, we will be cleaning and selecting only those rows that are useful to us. But since the first 5 lines on the `.anotations` file are very annoying, we start by removing them and putting all clean eggnog files in the same folder.
 
 
 ### 7.2 Taxonomic Annotation with Kaiju
