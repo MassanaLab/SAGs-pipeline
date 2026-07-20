@@ -258,7 +258,7 @@ Before running the script, make sure that the BRAKER GTF files, predicted protei
 
 The first step would be to find those scaffolds that have Tiara information but **BRAKER** was not able to predict any genes inside them. We are very sure of Tiara's results so we want to keep these scaffolds, it does not matter what **BRAKER** says.
 
-[9-process_leftovers_new_tiara_leuven.sh](scripts/3-POST-BRAKER/9-process_leftovers_new_tiara_leuven.sh)
+[7-process_leftovers_new_tiara_leuven.sh](scripts/3-POST-BRAKER/7-process_leftovers_new_tiara_leuven.sh)
 
 
 ### 8.2 Filtering genome assemblies
@@ -276,11 +276,11 @@ The following script will also perform 3 filters:
 3. Filter out scaffolds in the range of 1000-3000bp that have **any** hints (EggNOG & Kaiju instances) of being _eukaryotes_ and have **some** (more than 0) hints of being _prokaryotes_.
 
 
-[10-use_kaiju_process_FUNCTIONS_ARG.sh](scripts/3-POST-BRAKER/10-use_kaiju_process_FUNCTIONS_ARG.sh)
+[8-use_kaiju_process_FUNCTIONS_ARG.sh](scripts/3-POST-BRAKER/8-use_kaiju_process_FUNCTIONS_ARG.sh)
 
 Do it locally, probably faster:
 
-[10-use_kaiju_process_FUNCTIONS_ARG_local.sh](scripts/3-POST-BRAKER/10-use_kaiju_process_FUNCTIONS_ARG_local.sh)
+[8-use_kaiju_process_FUNCTIONS_ARG_local.sh](scripts/3-POST-BRAKER/8-use_kaiju_process_FUNCTIONS_ARG_local.sh)
 
 [kaiju_process_FUNCTIONS_ARG_old_pipe.R](scripts/3-POST-BRAKER/Rscripts/kaiju_process_FUNCTIONS_ARG_old_pipe.R)
 
@@ -288,7 +288,7 @@ Do it locally, probably faster:
 
 Once we have our 3 filters, we can use `seqkit grep` to grab the names of the selected scaffolds to be kept.
 
-[11-seqkit_greps+report.sh](scripts/3-POST-BRAKER/11-seqkit_greps+report.sh)
+[9-seqkit_greps+report.sh](scripts/3-POST-BRAKER/9-seqkit_greps+report.sh)
 
 ### 8.3 Reporting clean assemblies
 
@@ -300,11 +300,11 @@ Then we can do a QBT analysis (explained before).
 
 Notice the `N=x` variable. Indicate there to which filter (1, 2, or 3) you want to do QBT.
 
-[12-QBT_filterx+cleanning.sh](scripts/3-POST-BRAKER/12-QBT_filterx+cleanning.sh)
+[10-QBT_filterx+cleanning.sh](scripts/3-POST-BRAKER/10-QBT_filterx+cleanning.sh)
 
 **2. Generate reports**
 
-[14-new_QBT_report.sh](scripts/3-POST-BRAKER/14-new_QBT_report.sh)
+[11-new_QBT_report.sh](scripts/3-POST-BRAKER/11-new_QBT_report.sh)
 
 **3. Summarize filtered QBT results**
 
@@ -316,62 +316,62 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 
 *on hpc cluster:*
 
-[15-new_make_QBT_summary_filters.R](scripts/3-POST-BRAKER/15-new_make_QBT_summary_filters.R)
+[12-new_make_QBT_summary_filters.R](scripts/3-POST-BRAKER/12-new_make_QBT_summary_filters.R)
 
 #### 8.3.2 BUSCO with predicted genes (proteins)
 
-[16.1-busco_genes_f3+cleanning.sh](scripts/3-POST-BRAKER/16.1-busco_genes_f3+cleanning.sh)
+[13.1-busco_genes_f3+cleanning.sh](scripts/3-POST-BRAKER/13.1-busco_genes_f3+cleanning.sh)
 
-[16.2-busco_genes_report.sh](scripts/3-POST-BRAKER/16.2-busco_genes_report.sh)
+[13.2-busco_genes_report.sh](scripts/3-POST-BRAKER/13.2-busco_genes_report.sh)
 
-[16.3-make_BUSCO_prot.R](scripts/3-POST-BRAKER/16.3-make_BUSCO_prot.R)
+[13.3-make_BUSCO_prot.R](scripts/3-POST-BRAKER/13.3-make_BUSCO_prot.R)
 
 ## POST FILTER 3
 
 Here we repeat the same process applied on filter1 genomes, but now with filter3 genomes.
 
-[17-braker3_post_filter3.sh](scripts/3-POST-BRAKER/17-braker3_post_filter3.sh)
+[14-braker3_post_filter3.sh](scripts/3-POST-BRAKER/14-braker3_post_filter3.sh)
 
-[18-rename_and_organize.sh](scripts/3-POST-BRAKER/18-rename_and_organize.sh)
+[15-rename_and_organize.sh](scripts/3-POST-BRAKER/15-rename_and_organize.sh)
 
-[19-build_ingredients_and_clean_headers_filter3.sh](scripts/3-POST-BRAKER/19-build_ingredients_and_clean_headers_filter3.sh)
+[16-build_ingredients_and_clean_headers_filter3.sh](scripts/3-POST-BRAKER/16-build_ingredients_and_clean_headers_filter3.sh)
 
-[20-process_gtf_filter3.sh](scripts/3-POST-BRAKER/20-process_gtf_filter3.sh)
+[17-process_gtf_filter3.sh](scripts/3-POST-BRAKER/17-process_gtf_filter3.sh)
 
-[21-final_gff_final_faa_filter3.sh](scripts/3-POST-BRAKER/21-final_gff_final_faa_filter3.sh)
+[18-final_gff_final_faa_filter3.sh](scripts/3-POST-BRAKER/18-final_gff_final_faa_filter3.sh)
 
-[21.1-use_Extract_gff_info_out_Braker.sh](scripts/3-POST-BRAKER/21.1-use_Extract_gff_info_out_Braker.sh)
+[19.1-extract_annotation_stats.sh](scripts/3-POST-BRAKER/19.1-extract_annotation_stats.sh)
 
-[21.2-parsing_extract_regions_output2.sh](scripts/3-POST-BRAKER/21.2-parsing_extract_regions_output2.sh)
+[19.2-merge_annotation_stats.sh](scripts/3-POST-BRAKER/19.2-merge_annotation_stats.sh)
 
-[21.3-extract_percentages.R](scripts/3-POST-BRAKER/21.3-extract_percentages.R)
+[19.3-extract_annotation_percentages.R](scripts/3-POST-BRAKER/19.3-extract_annotation_percentages.R)
 
-[22-eggnog_mapper_filter3+skip4.sh](scripts/3-POST-BRAKER/22-eggnog_mapper_filter3+skip4.sh)
+[20-eggnog_mapper_filter3+skip4.sh](scripts/3-POST-BRAKER/20-eggnog_mapper_filter3+skip4.sh)
 
-[23.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh](scripts/3-POST-BRAKER/23.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh)
+[21.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh](scripts/3-POST-BRAKER/21.1-GFF_use_ALEIX_get_prediction_stats_filter3.sh)
 
-[23.2-check_GFF3_vs_FAA_filter3.sh](scripts/3-POST-BRAKER/23.2-check_GFF3_vs_FAA_filter3.sh)
+[21.2-check_GFF3_vs_FAA_filter3.sh](scripts/3-POST-BRAKER/21.2-check_GFF3_vs_FAA_filter3.sh)
 
-[24.1-genes_filter50_100_200.sh](scripts/3-POST-BRAKER/24.1-genes_filter50_100_200.sh)
+[22-genes_filter50_100_200.sh](scripts/3-POST-BRAKER/22-genes_filter50_100_200.sh)
 
-[24.2-gene_count50_100_200.sh](scripts/3-POST-BRAKER/24.2-gene_count50_100_200.sh)
+[23-gene_count50_100_200.sh](scripts/3-POST-BRAKER/23-gene_count50_100_200.sh)
 
-[26-og_QUAST+cleanning.sh](scripts/3-POST-BRAKER/26-og_QUAST+cleanning.sh)
+[24-og_QUAST+cleanning.sh](scripts/3-POST-BRAKER/24-og_QUAST+cleanning.sh)
 
-[27-og_new_QUAST_report.sh](scripts/3-POST-BRAKER/27-og_new_QUAST_report.sh)
+[25-og_new_QUAST_report.sh](scripts/3-POST-BRAKER/25-og_new_QUAST_report.sh)
 
-[28-quast_only_summary.R](scripts/3-POST-BRAKER/28-quast_only_summary.R)
+[26-quast_only_summary.R](scripts/3-POST-BRAKER/26-quast_only_summary.R)
 
-[29-replace_0Mb_col.sh](scripts/3-POST-BRAKER/29-replace_0Mb_col.sh)
+[27-replace_0Mb_col.R](scripts/3-POST-BRAKER/27-replace_0Mb_col.R)
 
-[30.1.0-final_cds1-3.sh](scripts/3-POST-BRAKER/30.1.0-final_cds1-3.sh)
+[28.1-final_cds1-3.sh](scripts/3-POST-BRAKER/28.1-final_cds1-3.sh)
 
-[30.1.1-filter1_initial.sh](scripts/3-POST-BRAKER/30.1.1-filter1_initial.sh)
+[28.2-filter1_initial.sh](scripts/3-POST-BRAKER/28.2-filter1_initial.sh)
 
-[30.1.2-filter3_initial.sh](scripts/3-POST-BRAKER/30.1.2-filter3_initial.sh)
+[28.3-filter3_initial.sh](scripts/3-POST-BRAKER/28.3-filter3_initial.sh)
 
-[30.2-interproscans.sh](scripts/3-POST-BRAKER/30.2-interproscans.sh)
+[29-interproscans.sh](scripts/3-POST-BRAKER/29-interproscans.sh)
 
-[30.3-excluded.sh](scripts/3-POST-BRAKER/30.3-excluded.sh)
+[30-excluded.sh](scripts/3-POST-BRAKER/30-excluded.sh)
 
-[30.4-made_withs.sh](scripts/3-POST-BRAKER/30.4-made_withs.sh)
+[31-made_withs.sh](scripts/3-POST-BRAKER/31-made_withs.sh)
