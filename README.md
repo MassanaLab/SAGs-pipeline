@@ -284,9 +284,7 @@ Do it locally, probably faster:
 
 Once we have our 3 filters, we can use `seqkit grep` to grab the names of the selected scaffolds to be kept.
 
-[11.1-seqkit_greps_leuven.sh](scripts/3-POST-BRAKER/11.1-seqkit_greps_leuven.sh)
-
-[11.2-quick_filters_report.sh](scripts/3-POST-BRAKER/11.2-quick_filters_report.sh)
+[11-seqkit_greps+report.sh](scripts/3-POST-BRAKER/11-seqkit_greps+report.sh)
 
 ### 8.3 Reporting clean assemblies
 
