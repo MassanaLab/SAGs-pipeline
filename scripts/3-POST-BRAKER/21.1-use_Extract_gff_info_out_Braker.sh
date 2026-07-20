@@ -18,7 +18,7 @@ NAMES_FILE="data/clean/names_${W}.txt"
 GFF_DIR="/mnt/smart/scratch/emm2/guillem/coass_revisit2/data/clean/aleix_gff_process_big2_coass_revisit_filter3/final_gff3"
 #FA_DIR="data/clean/scaffolds_f3"
 FA_DIR="/mnt/smart/scratch/emm2/guillem/coass_revisit2/data/clean/aleix_gff_process_big2_coass_revisit_filter3/assemblies3_clean"
-OUT_DIR="data/clean/${W}_annotation_stats_test2"
+OUT_DIR="data/clean/${W}_annotation_stats"
 LOG_DIR="data/logs/${W}"
 
 rm -r "$OUT_DIR"
