@@ -310,7 +310,7 @@ Move the 3 `all_repotsx` files to a folder in your computer and execute this scr
 
 *on hpc cluster:*
 
-[15-new_[22-eggnog_mapper_filter3+skip4.sh](scripts/3-POST-BRAKER/21-eggnog_mapper_filter3%2Bskip4.sh)make_QBT_summary_filters.R](scripts/3-POST-BRAKER/15-new_make_QBT_summary_filters.R)
+[15-new_make_QBT_summary_filters.R](scripts/3-POST-BRAKER/15-new_make_QBT_summary_filters.R)
 
 #### 8.3.2 BUSCO with predicted genes (proteins)
 
