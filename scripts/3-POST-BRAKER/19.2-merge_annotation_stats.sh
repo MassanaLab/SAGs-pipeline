@@ -19,17 +19,17 @@ set -euo pipefail
 #
 # Usage:
 #   bash scripts/3-POST-BRAKER/\
-#19.2-parsing_extract_regions_output2.sh [PROJECT]
+#19.2-merge_annotation_stats.sh [PROJECT]
 #
 # Example:
 #   bash scripts/3-POST-BRAKER/\
-#19.2-parsing_extract_regions_output2.sh coass_revisit
+#19.2-merge_annotation_stats.sh coass_revisit
 #
 # By default, the script exits with an error if any sample is missing.
 # To intentionally generate a partial table:
 #
 #   ALLOW_MISSING=1 bash scripts/3-POST-BRAKER/\
-#19.2-parsing_extract_regions_output2.sh coass_revisit
+#19.2-merge_annotation_stats.sh coass_revisit
 # =============================================================================
 
 W="${1:-coass_revisit}"
