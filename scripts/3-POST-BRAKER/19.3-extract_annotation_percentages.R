@@ -12,14 +12,14 @@
 #   data/clean/<PROJECT>_percent_genome_annotation.tsv
 #
 # Usage:
-#   Rscript scripts/3-POST-BRAKER/19.3-extract_percentages.R [PROJECT]
+#   Rscript scripts/3-POST-BRAKER/19.3-extract_annotation_percentages.R [PROJECT]
 #
 # Example:
-#   Rscript scripts/3-POST-BRAKER/19.3-extract_percentages.R coass_revisit
+#   Rscript scripts/3-POST-BRAKER/19.3-extract_annotation_percentages.R coass_revisit
 #
 # Custom input and output paths can also be provided:
 #
-#   Rscript scripts/3-POST-BRAKER/19.3-extract_percentages.R \
+#   Rscript scripts/3-POST-BRAKER/19.3-extract_annotation_percentages.R \
 #       coass_revisit \
 #       input_stats.tsv \
 #       output_percentages.tsv
@@ -31,8 +31,8 @@ if (length(args) > 3) {
   stop(
     paste0(
       "Usage:\n",
-      "  Rscript 19.3-extract_percentages.R [PROJECT]\n",
-      "  Rscript 19.3-extract_percentages.R ",
+      "  Rscript 19.3-extract_annotation_percentages.R [PROJECT]\n",
+      "  Rscript 19.3-extract_annotation_percentages.R ",
       "PROJECT [INPUT_FILE] [OUTPUT_FILE]"
     ),
     call. = FALSE
