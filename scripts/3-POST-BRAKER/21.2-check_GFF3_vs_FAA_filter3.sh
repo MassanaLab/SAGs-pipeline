@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-# check_faa_vs_processed.sh
 # Compare number of sequences in final_faa (*.faa) to rows-1 in processed outputs (*.txt)
-
 
 W=coass_update
 
