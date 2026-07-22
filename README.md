@@ -162,21 +162,32 @@ After you have braker results, use this script to organize the outputs:
 
 [rename_and_organize.sh](scripts/2-BRAKER/rename_and_organize.sh)
 
-## 6. BRAKER Gene Predictions Processing
+## 6. BRAKER Gene Prediction Processing
 
-After running BRAKER to predict genes on each SAG assembly, we applied a three-step post-processing pipeline to clean headers, standardize annotation files, filter gene models, and generate the final curated FAA and GFF3 outputs.
+### 6.0 Optional: Run Tiara before post-processing
 
-The first step is to prepare a clean, standardized dataset for all SAGs before applying any filtering. This script ensures that every sample has a clean assembly and GTF with matching contig headers, which is essential before running gene-length filtering.
+Some of the downstream post-processing steps require classification results from **Tiara**. Make sure these results are available before continuing.
+
+If Tiara has not yet been run, use the following script:
+
+[0-tiara.sh](scripts/3-POST-BRAKER/0-tiara.sh)
+
+### 6.1 Process the BRAKER gene predictions
+
+After using **BRAKER** to predict genes in each SAG assembly, we apply a three-step post-processing workflow. This workflow standardizes assembly and annotation headers, filters the predicted gene models, selects one representative transcript per gene, and generates the final curated FAA and GFF3 files.
+
+First, prepare a clean and standardized dataset for all SAGs. The following script ensures that each sample has an assembly and GTF file with matching contig identifiers. This consistency is required before applying the gene-length and transcript-selection filters.
 
 [1-build_ingredients_and_clean_headers.sh](scripts/3-POST-BRAKER/1-build_ingredients_and_clean_headers.sh)
 
-Then we proceed with the processing of each gtf file. The following script produces high-confidence, longest-isoform, ≥50 aa gene sets for each sample.
+Next, process the GTF file for each sample. The following script selects the longest transcript for each gene and retains predicted proteins with a minimum length of 50 amino acids.
 
 [2-process_gtf_filter1.sh](scripts/3-POST-BRAKER/2-process_gtf_filter1.sh)
 
-Finally, we collect all processed results and produce the final curated gene datasets.
+Finally, collect the processed outputs and generate the curated gene datasets for each sample.
 
 [3-final_gff_final_faa.sh](scripts/3-POST-BRAKER/3-final_gff_final_faa.sh)
+
 
 ## 7. Gene annotation
 
