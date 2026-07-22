@@ -20,18 +20,18 @@ set -euo pipefail
 #
 # Usage:
 #   bash scripts/3-POST-BRAKER/\
-#19.1-use_Extract_gff_info_out_Braker.sh [PROJECT]
+#19.1-extract_annotation_stats.sh [PROJECT]
 #
 # Example:
 #   bash scripts/3-POST-BRAKER/\
-#19.1-use_Extract_gff_info_out_Braker.sh coass_revisit
+#19.1-extract_annotation_stats.sh coass_revisit
 #
 # Optional path overrides:
 #
 #   GFF_DIR=/path/to/final_gff3 \
 #   FA_DIR=/path/to/assemblies3_clean \
 #   bash scripts/3-POST-BRAKER/\
-#19.1-use_Extract_gff_info_out_Braker.sh coass_revisit
+#19.1-extract_annotation_stats.sh coass_revisit
 #
 # Set RESET_OUTPUT=1 to remove all previous results before starting.
 # =============================================================================
