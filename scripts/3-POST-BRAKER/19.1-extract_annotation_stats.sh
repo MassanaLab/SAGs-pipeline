@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # =============================================================================
-# STEP 21.1
+# STEP 19.1
 #
 # Calculate annotation and genomic-region statistics for each sample.
 #
@@ -20,18 +20,18 @@ set -euo pipefail
 #
 # Usage:
 #   bash scripts/3-POST-BRAKER/\
-#21.1-use_Extract_gff_info_out_Braker.sh [PROJECT]
+#19.1-use_Extract_gff_info_out_Braker.sh [PROJECT]
 #
 # Example:
 #   bash scripts/3-POST-BRAKER/\
-#21.1-use_Extract_gff_info_out_Braker.sh coass_revisit
+#19.1-use_Extract_gff_info_out_Braker.sh coass_revisit
 #
 # Optional path overrides:
 #
 #   GFF_DIR=/path/to/final_gff3 \
 #   FA_DIR=/path/to/assemblies3_clean \
 #   bash scripts/3-POST-BRAKER/\
-#21.1-use_Extract_gff_info_out_Braker.sh coass_revisit
+#19.1-use_Extract_gff_info_out_Braker.sh coass_revisit
 #
 # Set RESET_OUTPUT=1 to remove all previous results before starting.
 # =============================================================================
@@ -161,7 +161,7 @@ while IFS= read -r sample || [[ -n "$sample" ]]; do
 
     ) >"$stdout_log" 2>"$stderr_log"; then
 
-        # These are the two files required by step 21.2.
+        # These are the two files required by step 19.2.
         regions_output="${sample_outdir}/${sample}_genomicregions1k.txt"
         intron_output="${sample_outdir}/${sample}_IntronCvsL.txt"
 
@@ -187,7 +187,7 @@ done < "$NAMES_FILE"
 
 echo
 echo "============================================================"
-echo "STEP 21.1 SUMMARY"
+echo "STEP 19.1 SUMMARY"
 echo "============================================================"
 echo "Successfully processed: $processed"
 echo "Missing inputs:         $missing"
@@ -196,8 +196,8 @@ echo "Output directory:       $OUT_DIR"
 echo "Log directory:          $LOG_DIR"
 
 if ((missing > 0 || failed > 0)); then
-    echo "ERROR: step 21.1 finished with missing or failed samples." >&2
+    echo "ERROR: step 19.1 finished with missing or failed samples." >&2
     exit 1
 fi
 
-echo "Step 21.1 completed successfully."
+echo "Step 19.1 completed successfully."
