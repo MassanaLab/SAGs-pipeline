@@ -323,11 +323,11 @@ Notice the `N=x` variable. Indicate there to which filter (1, 2, or 3) you want 
 
 Move the 3 `all_repotsx` files to a folder in your computer and execute this script in R:
 
-[QBT_LEUVEN_summary_final_filters.R](scripts/3-POST-BRAKER/QBT_LEUVEN_summary_final_filters.R)
+[12.1-QBT_summary_local.R](scripts/3-POST-BRAKER/12.1-QBT_summary_local.R)
 
 *on hpc cluster:*
 
-[12-new_make_QBT_summary_filters.R](scripts/3-POST-BRAKER/12-new_make_QBT_summary_filters.R)
+[12.2-new_make_QBT_summary_filters_hpc.R](scripts/3-POST-BRAKER/12.2-new_make_QBT_summary_filters_hpc.R)
 
 #### 8.3.2 BUSCO with predicted genes (proteins)
 
