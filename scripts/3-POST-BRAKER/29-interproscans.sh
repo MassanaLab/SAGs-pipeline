@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# 3X.?.-interproscan_filter_and_collect.sh
 #
 # For each InterProScan TSV in IN_DIR:
 #   1) Create a PFAM-only TSV (keep header + lines where col 4 contains "Pfam")
