@@ -4,11 +4,11 @@ set -u
 
 W=coass_guigo
 
-# Base for filter3 build (override with: BASE=... bash script.sh)
+# Base for filter3 build
 BASE="${BASE:-lustre/aleix_gff_process_big2_${W}_filter3}"
 mkdir -p "${BASE}/logs"
 
-# Default species file is ./x (override with: SPEC3=... bash script.sh)
+# Default species file
 SPEC3="${SPEC3:-${BASE}/species3.txt}"
 [[ -f "$SPEC3" ]] || { echo "No species list found: $SPEC3"; exit 1; }
 
@@ -158,11 +158,11 @@ run_species_by_line () {
 #
 # Numeric arguments:
 #   treat them as line numbers in x
-#   example: bash script.sh 29 42 45 46
+#   example: bash 17-process_gtf_filter3.sh 29 42 45 46
 #
 # --species NAME [NAME2 ...]:
 #   run specific species names directly
-#   example: bash script.sh --species ICM0065_COSAG.1_Prymnesiophyceae
+#   example: bash 17-process_gtf_filter3.sh --species ICM0065_COSAG.1_Prymnesiophyceae
 #
 
 if [[ $# -eq 0 ]]; then
