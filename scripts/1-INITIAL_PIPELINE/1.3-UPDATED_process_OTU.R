@@ -1,8 +1,16 @@
 library(tidyverse)
 library(reshape2)
 
+rm(list = ls())
+
+W <- "sept26"
+
+#setwd("sept26/")
+
+
 # Load and melt the OTU table
-otu <- read_delim("seq2_easig_sags_A105_otuTable.txt", delim = "\t", trim_ws = TRUE)
+otu <- read_delim("mtags_otu_table.tsv", delim = "\t", trim_ws = TRUE)
+all_samples <- names(otu)[-1]
 otus_melt <- melt(otu)
 
 # Split OTU ID into columns
@@ -83,6 +91,19 @@ for (s in samples) {
     )
 }
 
-# Combine and write
+# Combine and write the table containing samples with positive mtags
 final_df <- bind_rows(results)
-write_csv(final_df, "UPDATED_seq2_table_clean_v2.csv")
+write_tsv(
+    final_df,
+    paste0(W, "_mtags_otu_table_table_clean.tsv")
+)
+
+# Add the all-zero samples back. The sample name is retained, while all
+# calculated result columns are NA.
+final_df_with_NAs <- tibble(sample = all_samples) %>%
+    left_join(final_df, by = "sample")
+
+write_tsv(
+    final_df_with_NAs,
+    paste0(W, "_mtags_otu_table_table_clean_with_NAs.tsv")
+)
