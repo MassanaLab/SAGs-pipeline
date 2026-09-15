@@ -65,28 +65,21 @@ In the case of having several sequencing repetitions for each SAG, we need to co
 
 Check the general taxonomy of your reads using 18S-V4 fragments (mTags).
 
-### 2.1 BLAST-based extraction of 18S-V4 fragments
+### 2.1 Run Snakemke
 
-[1.1-extraction_blast.sh](scripts/1-INITIAL_PIPELINE/1.1-extraction_blast.sh)
+Try replicate the structure in [mtags_snakemake](https://github.com/MassanaLab/SAGs-pipeline/tree/main/mtags_snakemake). Then modify the input inside the [Snakefile](https://github.com/MassanaLab/SAGs-pipeline/blob/main/mtags_snakemake/Snakefile) so it uses your trimmed reads.
 
-Performs a basic BLAST of your reads against the eukaryotesV4 blast database. Generates mTags, which show the specific sequence of the hits.
+Make sure to create a logs file inside data:
 
-Result: 
--data/clean/extraction_blast/* 
-*.hits = “identification code” of the hits
-*.blast = “identification code” + specie_group_supergroup + data
+```
+mkdir -p data/logs
+```
+Finally run [1-mtags_slurm.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/mtags_snakemake/1-mtags_slurm.sh) with *sbathc*.
 
--data/clean/mtags/*.mtags.fna = “id code” with its entire sequence
+A *results* folder will be created. At the end of the whole process you should obtain an out table in *results/otu_table/mtags_otu_table.tsv*.
 
-### 2.2 mTag classification and OTU table generation
 
-[1.2-mtags_classification.sh](scripts/1-INITIAL_PIPELINE/1.2-mtags_classification.sh)
-
-Generates OTU table. Some additional R scripts are needed to clean and sort the table so it becomes more readable and has a better format for later analyses. 
-
-Result: data/clean/mtags/easig_sags_A105_mtags.fasta & easig_sags_A105_otuTable.txt
-
-### 2.3 Process OTU table
+### 2.2 Process OTU table
 
 [1.3-UPDATED_process_OTU.R](scripts/1-INITIAL_PIPELINE/1.3-UPDATED_process_OTU.R) 
 
