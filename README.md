@@ -67,16 +67,23 @@ Check the general taxonomy of your reads using 18S-V4 fragments (mTags).
 
 ### 2.1 Run Snakemke
 
-Try replicate the structure in [mtags_snakemake](https://github.com/MassanaLab/SAGs-pipeline/tree/main/mtags_snakemake). Then modify the input inside the [Snakefile](https://github.com/MassanaLab/SAGs-pipeline/blob/main/mtags_snakemake/Snakefile) so it uses your trimmed reads.
+1. Reproduce the directory structure of the [`mtags_snakemake`](https://github.com/MassanaLab/SAGs-pipeline/tree/main/mtags_snakemake) workflow in your working directory.
 
-Make sure to create a logs file inside data:
+2. Edit the [`Snakefile`](https://github.com/MassanaLab/SAGs-pipeline/blob/main/mtags_snakemake/Snakefile) and update the input paths so that they point to your trimmed reads.
 
+3. Create the directory used to store log files:
+
+   ```bash
+   mkdir -p data/logs
+   ```
+
+4. Run [1-mtags_slurm.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/mtags_snakemake/1-mtags_slurm.sh) with *sbatch*.
+
+The Snakefile will create a `results/` directory. After it completes successfully, the final mTags OTU table should be available at:
+
+```text
+results/otu_table/mtags_otu_table.tsv
 ```
-mkdir -p data/logs
-```
-Finally run [1-mtags_slurm.sh](https://github.com/MassanaLab/SAGs-pipeline/blob/main/mtags_snakemake/1-mtags_slurm.sh) with *sbathc*.
-
-A *results* folder will be created. At the end of the whole process you should obtain an out table in *results/otu_table/mtags_otu_table.tsv*.
 
 
 ### 2.2 Process OTU table
